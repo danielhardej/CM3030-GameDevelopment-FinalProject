@@ -84,9 +84,6 @@ public class CameraController : MonoBehaviour
 
         newZoom.z = Mathf.Clamp(newZoom.z, (float) -27.5, -17);
         newZoom.y = Mathf.Clamp(newZoom.y, 1, 18);
-
-        // Lowest = (4, -13.5)
-        // HIghest = (50, -59.5)
     }
 
     /// <summary>
