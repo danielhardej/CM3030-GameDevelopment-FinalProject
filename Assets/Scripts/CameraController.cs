@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     [Header("Camera")]
     [SerializeField, Tooltip("This is an empty Game Object centered on the player. This serves as the point of rotation for the Camera.")]
     GameObject CameraRig;
-    [ReadOnly, SerializeField, Tooltip("This is the Main Camera which must be a child of the Camera Rig.")]
+    [ReadOnly, SerializeField, Tooltip("This sets itself on start! This is the Main Camera which must be a child of the Camera Rig.")]
     Camera mainCamera;
     // Then we need the camera's transform, which we initialise in Start()
     Transform cameraTransform;
