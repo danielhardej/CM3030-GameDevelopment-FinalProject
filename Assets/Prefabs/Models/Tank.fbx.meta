@@ -3,7 +3,22 @@ guid: bc8537eff5e41b64db1ab4edfeba64e4
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 227bcb533a959ae428de70c9eb545c8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gun Metal
+    second: {fileID: 2100000, guid: 3294bcfbc06b38d45b46f9a18667ab0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wheel
+    second: {fileID: 2100000, guid: 6d1b838e48c1d7d40b273c53f0a31f70, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
