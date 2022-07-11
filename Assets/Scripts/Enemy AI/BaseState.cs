@@ -28,6 +28,11 @@ public abstract class BaseState
     protected float seekSpeed;
     protected float targetPositionUpdateTime;
 
+    protected float waitTime;
+    protected float retreatRadius;
+
+    protected bool hit_player;
+
     protected EnemyFSM FSM;
     #endregion
 
@@ -39,6 +44,11 @@ public abstract class BaseState
 
         seekSpeed = npc.seekSpeed;
         targetPositionUpdateTime = npc.targetPositionUpdateTime;
+
+        waitTime = npc.waitTime;
+        retreatRadius = npc.retreatRadius;
+
+        hit_player = npc.hit_player;
 
         FSM = npc;
     }

@@ -29,15 +29,15 @@ public class SeekState : BaseState
     {
         yield return new WaitForSeconds(targetPositionUpdateTime);
 
-        //if(some condition) 
-        //{
-        //    FSM.MoveToState(newState);
-        //}
-        //else
-        //{
-        Debug.Log("Setting target to:" + player.transform.position);
+        if (FSM.hit_player) 
+        {
+            FSM.MoveToState(FSM.bounceBack);
+        }
+        else
+        {
+            Debug.Log("Setting target to:" + player.transform.position);
             agent.destination = player.transform.position;
             FSM.StartCoroutine(SeekStatusCheck());
-        //}
+        }
     }
 }

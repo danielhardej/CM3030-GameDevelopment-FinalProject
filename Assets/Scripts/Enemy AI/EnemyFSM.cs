@@ -21,12 +21,19 @@ public class EnemyFSM : MonoBehaviour
 
     [Header("States")]
     public SeekState seek = new SeekState();
+    public BounceBackState bounceBack = new BounceBackState();
 
     [Header("Movement")]
-    [Tooltip("The speed that the agent moves. This is identical to changing the speed in thenavmesh agent")]
+    [Tooltip("The speed that the agent moves. This is identical to changing the speed in the navmesh agent")]
     public float seekSpeed;
     [Tooltip("The time, in seconds, between target position updates")]
     public float targetPositionUpdateTime;
+
+    [Header("Seek behaviour")]
+    [Tooltip("The time, in seconds, the sphere waits after colliding before seeking again")]
+    public float waitTime;
+    [Tooltip("The maximum distance to retreat to after a collision")]
+    public float retreatRadius;
 
     [HideInInspector]
     public NavMeshAgent agent;
@@ -36,6 +43,9 @@ public class EnemyFSM : MonoBehaviour
 
     [HideInInspector]
     public GameObject NPCgO; //NPC Game Object
+
+    [HideInInspector]
+    public bool hit_player;
     #endregion
 
     // Start is called before the first frame update
@@ -45,6 +55,8 @@ public class EnemyFSM : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         NPCgO = this.gameObject;
 
+        hit_player = false;
+
         MoveToState(seek);
     }
 
@@ -52,5 +64,16 @@ public class EnemyFSM : MonoBehaviour
     {
         currentState = state;
         currentState.EnterState(this);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision detected!");
+
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player hit");
+            hit_player = true;
+        }
     }
 }
