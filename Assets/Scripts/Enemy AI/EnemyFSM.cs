@@ -68,11 +68,11 @@ public class EnemyFSM : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision detected!");
+        //Debug.Log("Collision detected!");
 
         if(collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hit");
+            Debug.Log("Player hit!");
             hit_player = true;
         }
     }

@@ -35,7 +35,7 @@ public class SeekState : BaseState
         }
         else
         {
-            Debug.Log("Setting target to:" + player.transform.position);
+            //Debug.Log("Setting target to:" + player.transform.position);
             agent.destination = player.transform.position;
             FSM.StartCoroutine(SeekStatusCheck());
         }

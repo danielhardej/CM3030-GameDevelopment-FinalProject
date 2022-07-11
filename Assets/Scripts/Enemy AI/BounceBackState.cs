@@ -9,7 +9,7 @@ public class BounceBackState : BaseState
     {
         base.EnterState(npc);
 
-        Debug.Log("Player hit! Moving away...");
+        Debug.Log("Moving away...");
 
         agent.speed = seekSpeed;
         SetTarget();
@@ -45,7 +45,7 @@ public class BounceBackState : BaseState
 
     IEnumerator MoveAway(Vector3 target)
     {
-        Debug.Log("Retreating to: " + target);
+        //Debug.Log("Retreating to: " + target);
 
         // Set retreat location
         agent.destination = target;
