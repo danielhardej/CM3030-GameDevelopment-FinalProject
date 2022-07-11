@@ -1,4 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * 
+ * Code by: 
+ *      Dimitrios Vlachos
+ *      djv1@student.london.ac.uk
+ *      dimitri.j.vlachos@gmail.com
+ *      
+ * Adapted from our FSM lecture
+ * 
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
