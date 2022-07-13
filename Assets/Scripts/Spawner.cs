@@ -15,15 +15,32 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [ReadOnly, Tooltip("List of entities spawned by this spawner")]
+    public List<GameObject> spawnedEntities;
+
+    private void Update()
     {
-        
+        foreach (GameObject entity in spawnedEntities)
+        {
+            if (entity == null)
+            {
+                spawnedEntities.Remove(entity);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// This method spawns the entity passed at the spawner's location.
+    /// <example>
+    /// For example:
+    /// <code>
+    /// spawner.Spawn(GameObject enemy);
+    /// </code>
+    /// results in an instance of SphereEnemy instantiating in the spawner's location.
+    /// </example>
+    /// </summary>
+    public void Spawn(GameObject entity)
     {
-        
+        spawnedEntities.Add(Instantiate(entity));
     }
 }
