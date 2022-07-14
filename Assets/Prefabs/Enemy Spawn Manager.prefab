@@ -43,11 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d7f8f62b1a0b746958ae535b1ab456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDelay: 5
-  maxEnemies: 5
-  spawnType: 1
+  spawnDelay: 2
+  maxEnemies: 2
+  spawnType: 0
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   enemy: {fileID: 3789970061039388018, guid: 18a82a3c95723b04dba2883c0da85866, type: 3}
+  spawnedEntities: []
