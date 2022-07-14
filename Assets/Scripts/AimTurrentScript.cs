@@ -37,6 +37,6 @@ public class AimTurrentScript : MonoBehaviour
         var target = new Vector3(hitpoint.x, hitpoint.y, hitpoint.z);
 
         Turret.transform.LookAt(target);
-        Turret.transform.Rotate(new Vector3(-90f, 0, 180f));
+        //Turret.transform.Rotate(new Vector3(-90f, 0, 180f));
     }
 }
