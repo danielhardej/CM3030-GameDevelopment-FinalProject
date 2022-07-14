@@ -739,6 +739,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
+      propertyPath: spawnType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: maxEnemies
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: spawnDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
       propertyPath: spawnPoints.Array.data[0]
       value: 
       objectReference: {fileID: 406151180}

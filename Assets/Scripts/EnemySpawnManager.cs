@@ -35,7 +35,7 @@ public class EnemySpawnManager : MonoBehaviour
     //List<GameObject> enemies;
     [SerializeField, Tooltip("Enemy prefab to spawn")]
     GameObject enemy;
-    [ReadOnly, Tooltip("List of enemies spawned by this spawner")]
+    [SerializeField, ReadOnly, Tooltip("List of enemies spawned by this spawner")]
     List<GameObject> spawnedEntities;
 
     // This private variable is only used in the distributed spawn type to keep track of the current spawner to use
@@ -71,14 +71,26 @@ public class EnemySpawnManager : MonoBehaviour
          * Every frame we will check through all the entities we have spawned to
          * make sure they are still alive. If they have been destroyed by the player,
          * we can remove them from the list, allowing us to spawn more.
+         * 
+         * This check runs backwards so that we can remove elements from within the loop.
+         * If we don't do this, it does not work as we mess with the size of the array.
          */
-        foreach (GameObject entity in spawnedEntities)
+        for (int i = spawnedEntities.Count - 1; i >= 0; i--)
         {
-            // The entity object should be null after it is destroyed.
-            if (entity == null)
+            // Get the current entity we are checking
+            GameObject entity = spawnedEntities[i];
+
+            // If this entity is active, don't do anything.
+            if (entity.activeSelf)
             {
-                // Remove this null object fro our list
+                continue;
+            }
+            // If it is inactive, remove and delete it.
+            // When destroyed, the entity will set itself inactive, allowing us to manage it here.
+            else
+            {
                 spawnedEntities.Remove(entity);
+                Destroy(entity);
             }
         }
     }
