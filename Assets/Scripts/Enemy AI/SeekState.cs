@@ -19,7 +19,7 @@ public class SeekState : BaseState
     {
         base.EnterState(npc);
 
-        Debug.Log("Seeking Player...");
+        //Debug.Log("Seeking Player...");
 
         agent.speed = seekSpeed;
         SetTarget();

@@ -46,6 +46,7 @@ public class EnemyFSM : MonoBehaviour
 
     [HideInInspector]
     public bool hit_player;
+
     #endregion
 
     // Start is called before the first frame update
@@ -72,8 +73,14 @@ public class EnemyFSM : MonoBehaviour
 
         if(collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player hit!");
+            //Debug.Log("Player hit!");
             hit_player = true;
+        }
+        // Temporary destruction on hit code
+        else if (collision.gameObject.CompareTag("Bullet"))
+        {
+            //Debug.Log("Player hit!");
+            gameObject.SetActive(false);
         }
     }
 }
