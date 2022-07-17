@@ -23,11 +23,15 @@ public class EnemyFSM : MonoBehaviour
     public SeekState seek = new SeekState();
     public BounceBackState bounceBack = new BounceBackState();
 
+    [Header("NPC Settings")]
+    [Tooltip("Maximum health")]
+    public float health;
+
     [Header("Movement")]
     [Tooltip("The speed that the agent moves. This is identical to changing the speed in the navmesh agent")]
     public float seekSpeed;
     [Tooltip("The time, in seconds, between target position updates")]
-    public float targetPositionUpdateTime;
+    public float updateTime;
 
     [Header("Seek behaviour")]
     [Tooltip("The time, in seconds, the sphere waits after colliding before seeking again")]
@@ -61,6 +65,11 @@ public class EnemyFSM : MonoBehaviour
         MoveToState(seek);
     }
 
+    void Update()
+    {
+        
+    }
+
     public void MoveToState(BaseState state)
     {
         currentState = state;
@@ -80,7 +89,13 @@ public class EnemyFSM : MonoBehaviour
         else if (collision.gameObject.CompareTag("Bullet"))
         {
             //Debug.Log("Player hit!");
-            gameObject.SetActive(false);
+            health -= 25;
+
+            if (health <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+            
         }
     }
 }

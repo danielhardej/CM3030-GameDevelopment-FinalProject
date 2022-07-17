@@ -104,7 +104,7 @@ public class EnemySpawnManager : MonoBehaviour
         // We do it in this order for efficiency
         if (spawnedEntities.Count >= maxEnemies)
         {
-            Debug.Log("Cannot spawn more enemies, cap reached");
+            //Debug.Log("Cannot spawn more enemies, cap reached");
         }
         else
         {

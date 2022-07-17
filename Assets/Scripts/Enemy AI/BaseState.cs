@@ -25,6 +25,8 @@ public abstract class BaseState
     protected GameObject player;
     protected GameObject NPC;
 
+    protected float health;
+
     protected float seekSpeed;
     protected float targetPositionUpdateTime;
 
@@ -42,8 +44,10 @@ public abstract class BaseState
         player = npc.player;
         NPC = npc.NPCgO;
 
+        health = npc.health;
+
         seekSpeed = npc.seekSpeed;
-        targetPositionUpdateTime = npc.targetPositionUpdateTime;
+        targetPositionUpdateTime = npc.updateTime;
 
         waitTime = npc.waitTime;
         retreatRadius = npc.retreatRadius;
