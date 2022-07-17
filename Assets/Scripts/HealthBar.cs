@@ -4,8 +4,6 @@
  *      Dimitrios Vlachos
  *      djv1@student.london.ac.uk
  *      dimitri.j.vlachos@gmail.com
- *      
- * Adapted from our FSM lecture
  * 
  */
 
@@ -15,6 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(EnemyFSM))]
+[RequireComponent(typeof(Image))]
 public class HealthBar : MonoBehaviour
 {
     EnemyFSM fsm;
@@ -73,7 +72,7 @@ public class HealthBar : MonoBehaviour
         // Cancel the other directions of rotation
         v.x = v.z = 0.0f;
 
-        // Turn the camera
+        // Turn to the camera
         transform.LookAt(cam.transform.position - v);
         transform.Rotate(0, 180, 0);
     }
