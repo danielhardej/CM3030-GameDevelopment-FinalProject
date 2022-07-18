@@ -28,6 +28,9 @@ public class BulletController : MonoBehaviour
             var exp = Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+
+        // New damage application method
+        collision.gameObject.SendMessage("ApplyDamage", 25, SendMessageOptions.DontRequireReceiver);
     }
 
 }

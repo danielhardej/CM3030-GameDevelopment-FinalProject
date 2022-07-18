@@ -20,6 +20,13 @@ public class HealthBar : MonoBehaviour
     float maxHealth;
     float currentHealth;
 
+    // These values are used in the smoothstep movement of the bar
+    float previousHealth;
+    float targetHealth;
+
+    [SerializeField, Tooltip("Healthbar update speed")]
+    float updateSpeed = 10;
+
     [SerializeField, Tooltip("UI Image that is the healthbar to grow and shrink")]
     Image healthBar;
 
@@ -34,6 +41,10 @@ public class HealthBar : MonoBehaviour
         maxHealth = fsm.health;
         // Set starting health
         currentHealth = fsm.health;
+        // Set starting value
+        previousHealth = fsm.health;
+        // Set dynamic health
+        targetHealth = fsm.health;
         // Get the main camera
         cam = Camera.main;
     }
@@ -54,8 +65,23 @@ public class HealthBar : MonoBehaviour
         // Get the current health
         currentHealth = fsm.health;
 
+        // If there has been a change in health, begin moving the bar
+        if (currentHealth != previousHealth)
+        {
+            // Each frame moves a fraction of the curve
+            targetHealth = Mathf.SmoothStep(targetHealth, currentHealth, Time.deltaTime * updateSpeed);
+        }
+        
+        // If we have fully interpolated to the current health value, reset the check for a change in values
+        if (targetHealth == currentHealth)
+        {
+            previousHealth = currentHealth;
+        }
+
         // Calculate the percentage
-        float healthPercentage = currentHealth / maxHealth;
+        float healthPercentage = targetHealth / maxHealth;
+
+        //targetHealth = Mathf.SmoothStep();
 
         // Update bar to reflect it
         healthBar.fillAmount = healthPercentage;

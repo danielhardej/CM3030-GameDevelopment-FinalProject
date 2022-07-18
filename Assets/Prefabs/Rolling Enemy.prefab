@@ -220,7 +220,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 91ff362204857cb46997c63967005c67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b25f333d73a53e4e9fe7f6c83c91c97, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -342,9 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb67348190fff6d47a1c9f5bdb449e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fsm: {fileID: 0}
-  maxHealth: 0
-  currentHealth: 0
+  updateSpeed: 15
   healthBar: {fileID: 7007926551797142291}
 --- !u!1 &7007926552275056966
 GameObject:
@@ -411,7 +409,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 770d9ba881c2d3d4f9a8c051c3e7ae09, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
