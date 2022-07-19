@@ -8,10 +8,10 @@ public class AimTurrentScript : MonoBehaviour
 
     public GameObject Turret;
 
-    new Camera camera;
-
     [SerializeField]
     Vector3 hitpoint;
+
+    Camera mainCamera;
 
     Ray mouseRayCast;
 
@@ -20,14 +20,14 @@ public class AimTurrentScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = Camera.main;
+        mainCamera = Camera.main;
         rotation = Turret.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        mouseRayCast = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        mouseRayCast = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if(Physics.Raycast(mouseRayCast, out var hitInfo, 100f))
         {
