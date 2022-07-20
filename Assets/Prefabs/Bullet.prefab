@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3585639480078533}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -81,7 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3585639480078533
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +107,7 @@ GameObject:
   - component: {fileID: 2627179225541876158}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,4 +157,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialVelocity: 3000
   rigidbody: {fileID: 3957456611240435571}
-  explosion: {fileID: 892667361387821087, guid: d4f603b0d8da71e4ebdb986ee5ce4708, type: 3}
+  explosion: {fileID: 892667361387821087, guid: d4f603b0d8da71e4ebdb986ee5ce4708,
+    type: 3}
