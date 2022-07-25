@@ -1,0 +1,11 @@
+Model Information:
+* title:	Neon City - Low Poly Modeling
+* source:	https://sketchfab.com/3d-models/neon-city-low-poly-modeling-ab34563dd0d64f5a8bfa803c0f547d87
+* author:	AJ-TKG (https://sketchfab.com/AJ-TKG)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Neon City - Low Poly Modeling" (https://sketchfab.com/3d-models/neon-city-low-poly-modeling-ab34563dd0d64f5a8bfa803c0f547d87) by AJ-TKG (https://sketchfab.com/AJ-TKG) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

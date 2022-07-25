@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private FireBullet fireBullet;
 
+    [SerializeField]
     private bool isOnFloor;
 
     // Start is called before the first frame update
@@ -30,16 +31,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        isOnFloor = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
-
-        if(isOnFloor)
-        {
-            rigidbody.AddForce(transform.forward * movementVector.z * acceleration);
-
-            rigidbody.AddTorque(transform.up * movementVector.x * torque);
-        }
-
+        rigidbody.AddForce(transform.forward * movementVector.z * acceleration);        
+        rigidbody.AddTorque(transform.up * movementVector.x * torque);
     }
 
     public void Update()
