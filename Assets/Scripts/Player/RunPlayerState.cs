@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class RunPlayerState : PlayerState
 {
+    float _speed = 10.0f;
 
-    float _speed = 5.0f;
-    float _rotationSpeed = 5.0f;
-
-    Vector3 _movement;
-    Quaternion _rotation;
+    float _acceleration;
 
     public RunPlayerState(PlayerStateMachine stateMachine):base(stateMachine)
     {}
 
-    public override void Start()
+    public override void Start(Vector2 input)
     {
-        base.Start();
+        base.Start(input);
 
         _animator.SetTrigger("Run");
-        _movement = new Vector3(0,0,_speed);     
+
+        CalculateMovementAndRotation(input);
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
 
-        _stateMachine.transform.position += _movement * Time.deltaTime;
-        //_stateMachine.transform.rotation += _rotation * new Vector3(Time.deltaTime,Time.deltaTime,Time.deltaTime);
-
+        _stateMachine.transform.position += _stateMachine.forward * _acceleration * Time.deltaTime;
     }
 
     //input represents a the two input axis the x component is vertical and the y component horizontal.
@@ -39,19 +35,22 @@ public class RunPlayerState : PlayerState
 
         if(input.sqrMagnitude == 0f)
         {
-            _stateMachine.ChangeState(nameof(IdlePlayerState));
+            _stateMachine.ChangeState(nameof(IdlePlayerState), input);
             return;
         }
 
-        _movement = new Vector3(0,0, input.y * _speed);
-        _rotation = Quaternion.AngleAxis(input.x * _rotationSpeed, Vector3.up);
-        Debug.Log(_movement);
+        CalculateMovementAndRotation(input);
     }
 
     public override void End()
     {
         base.End();
         _animator.ResetTrigger("Run");
+    }
+
+    private void CalculateMovementAndRotation(Vector2 input)
+    {
+        _acceleration = input.y * _speed;
     }
 
 }

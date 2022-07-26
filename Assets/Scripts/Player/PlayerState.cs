@@ -16,7 +16,7 @@ public abstract class PlayerState
 
     }
 
-    public virtual void Start(){}
+    public virtual void Start(Vector2 input){}
 
     public virtual void Update(){}
 

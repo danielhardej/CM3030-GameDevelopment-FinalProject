@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AimTurrentScript : MonoBehaviour
+public class AimPlayerScript : MonoBehaviour
 {
 
-    public GameObject Turret;
+    public GameObject PlayerModel;
 
     [SerializeField]
     Vector3 hitpoint;
@@ -17,11 +15,14 @@ public class AimTurrentScript : MonoBehaviour
 
     [SerializeField]
     Quaternion rotation;
+
+    float height;
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
-        rotation = Turret.transform.rotation;
+        rotation = PlayerModel.transform.rotation;
+        height = 0f;
     }
 
     // Update is called once per frame
@@ -34,9 +35,8 @@ public class AimTurrentScript : MonoBehaviour
             hitpoint = hitInfo.point;
         }
 
-        var target = new Vector3(hitpoint.x, hitpoint.y, hitpoint.z);
+        var target = new Vector3(hitpoint.x, height, hitpoint.z);
 
-        Turret.transform.LookAt(target);
-        //Turret.transform.Rotate(new Vector3(-90f, 0, 180f));
+        PlayerModel.transform.LookAt(target);
     }
 }
