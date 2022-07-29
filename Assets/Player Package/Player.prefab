@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 364739410468465178}
   - component: {fileID: 6024150716778771892}
   - component: {fileID: 120866063208587640}
+  - component: {fileID: 6176458087496151324}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -125,6 +126,20 @@ MonoBehaviour:
   PlayerModel: {fileID: 3365620915910544308}
   hitpoint: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6176458087496151324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8540947140903547456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c71560d5ae22c049aa048b495ee5398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bullet: {fileID: 6435140742109667983, guid: b29506e9ca967264e9bc1667143b1426, type: 3}
+  SpawnPoint: {fileID: 1713226209506756631}
 --- !u!1001 &4956393479142959052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,6 +238,12 @@ GameObject:
 --- !u!4 &3365620915910907796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7673487251499544664, guid: c98043d57e0190845b790d7b92990bee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4956393479142959052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1713226209506756631 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5984790992432852955, guid: c98043d57e0190845b790d7b92990bee,
     type: 3}
   m_PrefabInstance: {fileID: 4956393479142959052}
   m_PrefabAsset: {fileID: 0}

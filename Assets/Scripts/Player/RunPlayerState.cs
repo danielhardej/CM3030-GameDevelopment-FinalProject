@@ -7,6 +7,7 @@ public class RunPlayerState : PlayerState
     float _speed = 10.0f;
 
     float _acceleration;
+    float _strafe;
 
     public RunPlayerState(PlayerStateMachine stateMachine):base(stateMachine)
     {}
@@ -24,7 +25,9 @@ public class RunPlayerState : PlayerState
     {
         base.FixedUpdate();
 
-        _stateMachine.transform.position += _stateMachine.forward * _acceleration * Time.deltaTime;
+        var direction = (_stateMachine.forward * _acceleration) + _stateMachine.transform.right * _strafe;
+
+        _stateMachine.transform.position += direction * Time.deltaTime;
     }
 
     //input represents a the two input axis the x component is vertical and the y component horizontal.
@@ -51,6 +54,7 @@ public class RunPlayerState : PlayerState
     private void CalculateMovementAndRotation(Vector2 input)
     {
         _acceleration = input.y * _speed;
+        _strafe = input.x * _speed/2 * (-1f);
     }
 
 }

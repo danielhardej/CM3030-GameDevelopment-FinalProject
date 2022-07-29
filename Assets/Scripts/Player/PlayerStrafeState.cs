@@ -9,6 +9,8 @@ public class PlayerStrafeState : PlayerState
 
     private string _currentTrigger;
 
+    float _speed = 5.0f;
+
     public PlayerStrafeState(PlayerStateMachine stateMachine): base(stateMachine)
     {}
     // Start is called before the first frame update
@@ -24,7 +26,9 @@ public class PlayerStrafeState : PlayerState
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        
+        var direction = _currentTrigger == STRAFE_LEFT ? -_stateMachine.transform.right : _stateMachine.transform.right;
+
+        _stateMachine.transform.position += direction * _speed * Time.deltaTime;
     }
 
     public override void Move(Vector2 input)

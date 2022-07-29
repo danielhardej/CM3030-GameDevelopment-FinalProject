@@ -11,7 +11,7 @@ public class FireBullet : MonoBehaviour
 
     public Transform SpawnPoint;
 
-    public void Fire()
+    public void OnFire()
     {
         _bulletInstance = Instantiate(Bullet, SpawnPoint.position, SpawnPoint.rotation);
     }

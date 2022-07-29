@@ -26,7 +26,7 @@ public class AimPlayerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         mouseRayCast = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
