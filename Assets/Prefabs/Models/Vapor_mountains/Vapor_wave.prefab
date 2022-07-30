@@ -336,15 +336,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5432572507376021108}
-  m_LocalRotation: {x: 0.0750173, y: 0.70311624, z: 0.075017296, w: 0.7031162}
-  m_LocalPosition: {x: 1111, y: -14, z: 3833}
+  m_LocalRotation: {x: 0.004183148, y: 0.99358314, z: 0.10600809, w: 0.03920764}
+  m_LocalPosition: {x: -174, y: 42, z: -1123}
   m_LocalScale: {x: 13.0927105, y: 5.87323, z: 5.87323}
   m_Children:
   - {fileID: 8542676448873966867}
   - {fileID: 5239138549688989580}
   m_Father: {fileID: 5330260196269683988}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 12.18}
+  m_LocalEulerAnglesHint: {x: -12.142, y: 175.37701, z: 0.97400004}
 --- !u!1 &5973093134102180184
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 993321498751793843}
   - component: {fileID: 644693688843291004}
   - component: {fileID: 8414088922583554569}
+  - component: {fileID: 587440591325273072}
   m_Layer: 0
   m_Name: mountain.001_mountain_0
   m_TagString: Untagged
@@ -434,11 +435,24 @@ MeshCollider:
   m_GameObject: {fileID: 5973093134102180184}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6a7142568ee9b79449098a7dfdda1f19, type: 2}
+--- !u!65 &587440591325273072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973093134102180184}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 232.65886, y: 196.87018, z: 213.89842}
+  m_Center: {x: -6.368455, y: 48.383293, z: -6.9491925}
 --- !u!1 &5996781563884723666
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +465,7 @@ GameObject:
   - component: {fileID: 819443452498704526}
   - component: {fileID: 6977733260026206354}
   - component: {fileID: 2348176078620600992}
+  - component: {fileID: 7726875930533148648}
   m_Layer: 0
   m_Name: mountain_mountain_0
   m_TagString: Untagged
@@ -528,11 +543,24 @@ MeshCollider:
   m_GameObject: {fileID: 5996781563884723666}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 38eb6e4bf5724a44e8772b4ba57b4470, type: 2}
+--- !u!65 &7726875930533148648
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996781563884723666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 232.65866, y: 97.050705, z: 176.1081}
+  m_Center: {x: -6.3684216, y: 39.184055, z: -8.6934805}
 --- !u!1 &6782319516579413639
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,15 +616,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6791445501014193614}
-  m_LocalRotation: {x: -0, y: -0.6087614, z: -0, w: -0.7933534}
-  m_LocalPosition: {x: -1220, y: -14, z: 4463}
+  m_LocalRotation: {x: -0, y: -0.6892584, z: -0, w: -0.7245157}
+  m_LocalPosition: {x: -958, y: -173, z: 694}
   m_LocalScale: {x: 14.614795, y: 10.115429, z: 6.556018}
   m_Children:
   - {fileID: 5671667529481673663}
   - {fileID: 7929814080317637744}
   m_Father: {fileID: 5330260196269683988}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 75, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 87.143005, z: 0}
 --- !u!1 &6889406468818494939
 GameObject:
   m_ObjectHideFlags: 0

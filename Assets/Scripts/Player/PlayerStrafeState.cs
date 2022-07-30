@@ -26,9 +26,10 @@ public class PlayerStrafeState : PlayerState
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        var direction = _currentTrigger == STRAFE_LEFT ? -_stateMachine.transform.right : _stateMachine.transform.right;
+        var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
 
         _stateMachine.transform.position += direction * _speed * Time.deltaTime;
+        Debug.DrawLine(_stateMachine.transform.position, _stateMachine.transform.position + direction * _speed);
     }
 
     public override void Move(Vector2 input)
@@ -37,13 +38,13 @@ public class PlayerStrafeState : PlayerState
 
         if(input.sqrMagnitude == 0f)
         {
-            _stateMachine.ChangeState(nameof(IdlePlayerState), input);
+            _stateMachine.ChangeState(nameof(PlayerIdleState), input);
             return;
         }
 
         if(input.y != 0f)
         {
-            _stateMachine.ChangeState(nameof(RunPlayerState), input);
+            _stateMachine.ChangeState(nameof(PlayerRunState), input);
             return;
         }
 

@@ -12,17 +12,16 @@ public class PlayerStateMachine : MonoBehaviour
 
     public GameObject PlayerModel;
     
-    [HideInInspector]
     public Vector3 forward => PlayerModel.transform.forward;
 
     void Start()
     {
         _states = new Dictionary<string, PlayerState>();
-        _states.Add(nameof(IdlePlayerState), new IdlePlayerState(this));
-        _states.Add(nameof(RunPlayerState), new RunPlayerState(this));
+        _states.Add(nameof(PlayerIdleState), new PlayerIdleState(this));
+        _states.Add(nameof(PlayerRunState), new PlayerRunState(this));
         _states.Add(nameof(PlayerStrafeState), new PlayerStrafeState(this));
 
-        _currentState = _states[nameof(IdlePlayerState)];
+        _currentState = _states[nameof(PlayerIdleState)];
 
         _currentState.Start(Vector2.zero);
 
@@ -31,6 +30,11 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_currentState == null)
+        {
+            Start();
+        }
+       
         _currentState.Update();
     }
 

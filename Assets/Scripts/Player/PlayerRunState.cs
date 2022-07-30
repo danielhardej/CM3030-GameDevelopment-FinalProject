@@ -1,15 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class RunPlayerState : PlayerState
+public class PlayerRunState : PlayerState
 {
     float _speed = 10.0f;
 
     float _acceleration;
     float _strafe;
 
-    public RunPlayerState(PlayerStateMachine stateMachine):base(stateMachine)
+    public PlayerRunState(PlayerStateMachine stateMachine):base(stateMachine)
     {}
 
     public override void Start(Vector2 input)
@@ -25,7 +25,7 @@ public class RunPlayerState : PlayerState
     {
         base.FixedUpdate();
 
-        var direction = (_stateMachine.forward * _acceleration) + _stateMachine.transform.right * _strafe;
+        var direction = (_stateMachine.forward * _acceleration) + _stateMachine.PlayerModel.transform.right * _strafe;
 
         _stateMachine.transform.position += direction * Time.deltaTime;
     }
@@ -38,7 +38,7 @@ public class RunPlayerState : PlayerState
 
         if(input.sqrMagnitude == 0f)
         {
-            _stateMachine.ChangeState(nameof(IdlePlayerState), input);
+            _stateMachine.ChangeState(nameof(PlayerIdleState), input);
             return;
         }
 
@@ -54,7 +54,7 @@ public class RunPlayerState : PlayerState
     private void CalculateMovementAndRotation(Vector2 input)
     {
         _acceleration = input.y * _speed;
-        _strafe = input.x * _speed/2 * (-1f);
+        _strafe = (float)Math.Round(input.x)  * _speed/2 * (-1f);
     }
 
 }

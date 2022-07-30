@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class IdlePlayerState : PlayerState
+public class PlayerIdleState : PlayerState
 {
 
-    public IdlePlayerState(PlayerStateMachine stateMachine):base(stateMachine)
+    public PlayerIdleState(PlayerStateMachine stateMachine):base(stateMachine)
     {}
 
     public override void Start(Vector2 _)
@@ -23,7 +21,7 @@ public class IdlePlayerState : PlayerState
             return;
         }
 
-        _stateMachine.ChangeState(nameof(RunPlayerState), input);
+        _stateMachine.ChangeState(nameof(PlayerRunState), input);
     }
 
     public override void End()
