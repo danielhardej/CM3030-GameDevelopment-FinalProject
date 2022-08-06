@@ -23,6 +23,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     [Header("States")]
     public MechSeekState seek = new MechSeekState();
+    public MechWalkShootState walkAndShoot = new MechWalkShootState();
 
     [Header("Animation")]
     Animator animator;
@@ -30,6 +31,10 @@ public class MechEnemyFSM : MonoBehaviour
     [Header("NPC Settings")]
     [Tooltip("Maximum health")]
     public float health;
+    [Tooltip("Maximum range of weapons")]
+    public float range;
+    [Tooltip("The distance the mech will attempt to approach to while firing")]
+    public float preferredRange;
 
     [Header("Movement")]
     [Tooltip("The time, in seconds, between target position updates")]

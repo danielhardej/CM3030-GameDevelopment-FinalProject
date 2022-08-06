@@ -25,7 +25,11 @@ public abstract class MechBaseState
     protected GameObject player;
     protected GameObject NPC;
 
+    protected Animator animator;
+
     protected float health;
+    protected float range;
+    protected float preferredRange;
     protected float targetPositionUpdateTime;
 
     protected MechEnemyFSM FSM;
@@ -38,6 +42,9 @@ public abstract class MechBaseState
         NPC = npc.NPCgO;
 
         health = npc.health;
+
+        range = npc.range;
+        preferredRange = npc.preferredRange;
 
         targetPositionUpdateTime = npc.updateTime;
 

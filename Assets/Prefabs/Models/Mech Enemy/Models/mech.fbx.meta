@@ -1855,8 +1855,8 @@ ModelImporter:
       name: SleepToDefault
       takeName: SleepToDefault
       internalID: 0
-      firstFrame: 0
-      lastFrame: 33
+      firstFrame: -1
+      lastFrame: 33.9
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

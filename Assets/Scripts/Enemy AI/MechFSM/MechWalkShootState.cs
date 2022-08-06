@@ -13,7 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechSeekState : MechBaseState
+public class MechWalkShootState : MechBaseState
 {
     public override void EnterState(MechEnemyFSM npc)
     {
@@ -26,6 +26,7 @@ public class MechSeekState : MechBaseState
          * Here we are getting the FSM MonoBehaviour to begin this coroutine.
          */
         FSM.StartCoroutine(SeekStatusCheck());
+
     }
 
     IEnumerator SeekStatusCheck()
@@ -34,17 +35,20 @@ public class MechSeekState : MechBaseState
         yield return new WaitForSeconds(targetPositionUpdateTime);
 
         // If the player is within shooting range
-        if (Vector3.Distance(NPC.transform.position, player.transform.position) <= range)
+        if (Vector3.Distance(NPC.transform.position, player.transform.position) <= preferredRange)
         {
             // Fire a raycast from the centre of the mech at the player to see if it hits.
             Vector3 player_direction_vector = (NPC.transform.position - player.transform.position).normalized;
             if (Physics.Raycast(NPC.transform.position, player_direction_vector, out RaycastHit hitInfo, range))
             {
                 // If the Raycast did hit, then check if it hit the player
-                if(hitInfo.transform.CompareTag("Player"))
+                if (hitInfo.transform.CompareTag("Player"))
                 {
                     // If all of this is true, Move to the next state
                     FSM.MoveToState(FSM.walkAndShoot);
+
+                    // Stop the agent
+                    agent.isStopped = true;
 
                     // This breaks us out of the IEnumerator and does not run the code below.
                     yield break;
@@ -54,14 +58,6 @@ public class MechSeekState : MechBaseState
         // If any of the statements above were false, this runs which re-runs this IEnumerator (Like a loop!)
         //Debug.Log("Setting target to:" + player.transform.position);
         agent.destination = player.transform.position;
-
-        // If the agent has a path to the target (And is thus moving)
-        if (agent.hasPath)
-        {
-            // Then begin animating the movement of the agent.
-            //animator.SetBool("isWalking", true);
-        }
-
         FSM.StartCoroutine(SeekStatusCheck());
     }
 }
