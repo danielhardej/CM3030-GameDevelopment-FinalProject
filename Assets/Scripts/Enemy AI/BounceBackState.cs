@@ -20,7 +20,7 @@ public class BounceBackState : BaseState
     {
         base.EnterState(npc);
 
-        Debug.Log("Moving away...");
+        //Debug.Log("Moving away...");
 
         agent.speed = seekSpeed;
         SetTarget();
