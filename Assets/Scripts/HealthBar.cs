@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //[RequireComponent(typeof(EnemyFSM))]
-[RequireComponent(typeof(Image))]
+//[RequireComponent(typeof(Image))]
 public class HealthBar : MonoBehaviour
 {
     EnemyFSM fsm;
