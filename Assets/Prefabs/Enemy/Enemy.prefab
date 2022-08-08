@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 2196903615762149676}
   - component: {fileID: 8617183634618009876}
   - component: {fileID: 8899391886218983249}
+  - component: {fileID: -2069169431256764335}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -257,6 +258,27 @@ MonoBehaviour:
   player: {fileID: 0}
   NPCgO: {fileID: 0}
   hit_player: 0
+  animator: {fileID: 0}
+  isOnGround: 0
+--- !u!95 &-2069169431256764335
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7073640469398578449}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0472e774d219fe14ba9b76b3a6b75d4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8220042419607447409
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +438,10 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_Controller
       value: 
+      objectReference: {fileID: 9100000, guid: 0472e774d219fe14ba9b76b3a6b75d4b, type: 2}
+    - target: {fileID: 9500000, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: fec746e46c2fd354fa0bc92720075dbd, type: 3}
       propertyPath: m_Materials.Array.data[0]
