@@ -80,6 +80,11 @@ public class EnemyFSM : MonoBehaviour
     void FixedUpdate()
     {
         isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
+
+        if(isOnGround)
+        {
+            agent.enabled = true;
+        }
     }
 
     public void MoveToState(BaseState state)
