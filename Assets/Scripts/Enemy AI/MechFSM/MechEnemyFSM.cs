@@ -70,6 +70,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void MoveToState(MechBaseState state)
     {
+        Debug.Log("Entering state: " + state);
         currentState = state;
         currentState.EnterState(this);
     }
