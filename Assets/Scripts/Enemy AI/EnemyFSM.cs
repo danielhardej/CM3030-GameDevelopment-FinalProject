@@ -110,6 +110,7 @@ public class EnemyFSM : MonoBehaviour
 
             if (health <= 0)
             {
+                GameController.Instance.IncreaseScore(10);
                 gameObject.SetActive(false);
             }
             
