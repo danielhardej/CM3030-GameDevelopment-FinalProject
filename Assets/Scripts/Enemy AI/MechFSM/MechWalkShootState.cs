@@ -18,6 +18,7 @@ public class MechWalkShootState : MechBaseState
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
+        Debug.Log("Entering Walk Shoot State");
 
         /*
          * Coroutines must be called from a MonoBehaviour class. Since this is not a monobehaviour,

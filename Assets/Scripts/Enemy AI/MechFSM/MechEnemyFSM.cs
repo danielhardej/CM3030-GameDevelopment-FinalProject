@@ -26,7 +26,7 @@ public class MechEnemyFSM : MonoBehaviour
     public MechWalkShootState walkAndShoot = new MechWalkShootState();
 
     [Header("Animation")]
-    Animator animator;
+    public Animator animator;
 
     [Header("NPC Settings")]
     [Tooltip("Maximum health")]

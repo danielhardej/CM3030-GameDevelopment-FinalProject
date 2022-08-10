@@ -18,6 +18,9 @@ public class MechSeekState : MechBaseState
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
+        Debug.Log("Entering Seek State");
+
+        animator.SetBool("isWalking", true);
 
         /*
          * Coroutines must be called from a MonoBehaviour class. Since this is not a monobehaviour,
@@ -33,16 +36,32 @@ public class MechSeekState : MechBaseState
         // Waits the presribed amount of time
         yield return new WaitForSeconds(targetPositionUpdateTime);
 
+        float distanceToPlayer = Vector3.Distance(NPC.transform.position, player.transform.position);
+        //Debug.Log("Distance: " + distanceToPlayer);
+
         // If the player is within shooting range
-        if (Vector3.Distance(NPC.transform.position, player.transform.position) <= range)
+        if (distanceToPlayer <= range)
         {
+            Debug.Log("Within range");
             // Fire a raycast from the centre of the mech at the player to see if it hits.
-            Vector3 player_direction_vector = (NPC.transform.position - player.transform.position).normalized;
-            if (Physics.Raycast(NPC.transform.position, player_direction_vector, out RaycastHit hitInfo, range))
+            Vector3 playerDirectionVector = (player.transform.position - NPC.transform.position).normalized;
+            Debug.DrawRay(NPC.transform.position, playerDirectionVector * range, Color.red);
+
+            // Bit shift the index of the layer (8) to get a bit mask
+            int layerMask = 1 << 8;
+
+            // This would cast rays only against colliders in layer 8.
+            // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+            layerMask = ~layerMask;
+
+            if (Physics.Raycast(NPC.transform.position, playerDirectionVector, out RaycastHit hitInfo, range, layerMask))
             {
+                Debug.Log("Hit something");
+                Debug.Log("Hit: " + hitInfo.rigidbody);
                 // If the Raycast did hit, then check if it hit the player
                 if(hitInfo.transform.CompareTag("Player"))
                 {
+                    Debug.Log("Can see player!");
                     // If all of this is true, Move to the next state
                     FSM.MoveToState(FSM.walkAndShoot);
 
@@ -54,13 +73,6 @@ public class MechSeekState : MechBaseState
         // If any of the statements above were false, this runs which re-runs this IEnumerator (Like a loop!)
         //Debug.Log("Setting target to:" + player.transform.position);
         agent.destination = player.transform.position;
-
-        // If the agent has a path to the target (And is thus moving)
-        if (agent.hasPath)
-        {
-            // Then begin animating the movement of the agent.
-            //animator.SetBool("isWalking", true);
-        }
 
         FSM.StartCoroutine(SeekStatusCheck());
     }

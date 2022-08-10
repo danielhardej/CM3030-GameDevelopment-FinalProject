@@ -41,6 +41,8 @@ public abstract class MechBaseState
         player = npc.player;
         NPC = npc.NPCgO;
 
+        animator = npc.animator;
+
         health = npc.health;
 
         range = npc.range;
