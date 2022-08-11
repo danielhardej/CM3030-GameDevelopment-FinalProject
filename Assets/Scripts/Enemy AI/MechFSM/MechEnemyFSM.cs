@@ -39,6 +39,10 @@ public class MechEnemyFSM : MonoBehaviour
     [Header("Movement")]
     [Tooltip("The time, in seconds, between target position updates")]
     public float updateTime;
+    [Tooltip("Vertical offset of sight-line, used for shooting")]
+    public float sightHeightOffset;
+    [Tooltip("The mech's target location for it's NavMeshAgent"), ReadOnly]
+    public Vector3 destination;
 
     [HideInInspector]
     public NavMeshAgent agent;

@@ -12,13 +12,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+/// <summary>
+/// State <c>MechWalkShootState</c> Is a behavioural state for the mech enemy.
+/// <para>
+/// <c>MechWalkShootState</c> has the mech walk around the player, shooting at them.
+/// 
+/// </para>
+/// </summary>
 public class MechWalkShootState : MechBaseState
 {
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
-        Debug.Log("Entering Walk Shoot State");
+
+        // Set a new destination for the navmeshagent
+        SetDestination();
 
         /*
          * Coroutines must be called from a MonoBehaviour class. Since this is not a monobehaviour,
@@ -32,33 +42,81 @@ public class MechWalkShootState : MechBaseState
 
     IEnumerator SeekStatusCheck()
     {
-        // Waits the presribed amount of time
+        // Waits the prescribed amount of time
         yield return new WaitForSeconds(targetPositionUpdateTime);
 
-        // If the player is within shooting range
-        if (Vector3.Distance(NPC.transform.position, player.transform.position) <= preferredRange)
+        // Rotate and Fire
+        RotateTorso();
+        FireAtPlayer();
+
+        Debug.Log(Vector3.Distance(NPC.transform.position, destination));
+
+        // If we have lost line of sight with the player, go back to seeking.
+        if (!HasLineOfSight())
         {
-            // Fire a raycast from the centre of the mech at the player to see if it hits.
-            Vector3 player_direction_vector = (NPC.transform.position - player.transform.position).normalized;
-            if (Physics.Raycast(NPC.transform.position, player_direction_vector, out RaycastHit hitInfo, range))
-            {
-                // If the Raycast did hit, then check if it hit the player
-                if (hitInfo.transform.CompareTag("Player"))
-                {
-                    // If all of this is true, Move to the next state
-                    FSM.MoveToState(FSM.walkAndShoot);
-
-                    // Stop the agent
-                    agent.isStopped = true;
-
-                    // This breaks us out of the IEnumerator and does not run the code below.
-                    yield break;
-                }
-            }
+            // Move back to the seek state
+            FSM.MoveToState(FSM.seek);
+            // Stop the execution of this coroutine
+            yield break;
         }
-        // If any of the statements above were false, this runs which re-runs this IEnumerator (Like a loop!)
-        //Debug.Log("Setting target to:" + player.transform.position);
-        agent.destination = player.transform.position;
+        // If we are close to our destination, select a new one
+        else if (Vector3.Distance(NPC.transform.position, destination) < 5)
+        {
+            SetDestination();
+        }
+
+        // Otherwise, continue this state
         FSM.StartCoroutine(SeekStatusCheck());
+    }
+
+    /// <summary>
+    /// Method <c>SetDestination</c> Resets the NavMeshAgent's current destination target to a new target centred around the player
+    /// </summary>
+    private void SetDestination()
+    {
+        Vector3 newDestination = GetRandomLocation(player.transform.position, preferredRange);
+
+        destination = newDestination;
+        agent.SetDestination(destination);
+    }
+
+    /// <summary>
+    /// Method <c>RotateTorso</c> Rotates the mech's torso to face the player.
+    /// </summary>
+    private void RotateTorso()
+    {
+
+    }
+
+    /// <summary>
+    /// Method <c>FireAtPlayer</c> Fires the guns at the player
+    /// </summary>
+    private void FireAtPlayer()
+    {
+
+    }
+
+    /// <summary>
+    /// Method <c>GetRandomLocation</c> Gets a random location on the navmesh, centred around <c>centre</c> with radius <c>radius</c>
+    /// </summary>
+    private Vector3 GetRandomLocation(Vector3 centre, float radius)
+    {
+        // Get a random point within a defiend sphere around the agent
+        Vector3 random_direction = Random.insideUnitSphere * radius;
+
+        // Get the direction of that point
+        random_direction += centre;
+
+        // Instantiate our target location
+        // We instatiate in at the player's location in case a point isn't found in the next step
+        Vector3 target = player.transform.position;
+
+        // Get the co-ordinates using a raycast to find the location
+        if (NavMesh.SamplePosition(random_direction, out NavMeshHit hit, radius, 1))
+        {
+            target = hit.position;
+        }
+
+        return target;
     }
 }
