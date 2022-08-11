@@ -73,7 +73,7 @@ public class MechWalkShootState : MechBaseState
     /// </summary>
     private void RotateTorso()
     {
-
+        // This is currently being handled in the FSM
     }
 
     /// <summary>
