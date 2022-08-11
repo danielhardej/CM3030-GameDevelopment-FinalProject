@@ -64,20 +64,8 @@ public class MechWalkShootState : MechBaseState
         {
             SetDestination();
         }
-
         // Otherwise, continue this state
         FSM.StartCoroutine(SeekStatusCheck());
-    }
-
-    /// <summary>
-    /// Method <c>SetDestination</c> Resets the NavMeshAgent's current destination target to a new target centred around the player
-    /// </summary>
-    private void SetDestination()
-    {
-        Vector3 newDestination = GetRandomLocation(player.transform.position, preferredRange);
-
-        destination = newDestination;
-        agent.SetDestination(destination);
     }
 
     /// <summary>
@@ -94,6 +82,17 @@ public class MechWalkShootState : MechBaseState
     private void FireAtPlayer()
     {
 
+    }
+
+    /// <summary>
+    /// Method <c>SetDestination</c> Resets the NavMeshAgent's current destination target to a new target centred around the player
+    /// </summary>
+    private void SetDestination()
+    {
+        Vector3 newDestination = GetRandomLocation(player.transform.position, preferredRange);
+
+        destination = newDestination;
+        agent.SetDestination(destination);
     }
 
     /// <summary>

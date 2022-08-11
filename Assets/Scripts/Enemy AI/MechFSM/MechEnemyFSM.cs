@@ -44,6 +44,12 @@ public class MechEnemyFSM : MonoBehaviour
     [Tooltip("The mech's target location for it's NavMeshAgent"), ReadOnly]
     public Vector3 destination;
 
+    //[Header("Targeting")]
+    //[Tooltip("Left/Right rotation angle toward target"), ReadOnly]
+    //public float angleToTarget;
+    //[Tooltip("Up/Down rotation angle toward target"), ReadOnly]
+    //public float targetDepression;
+
     [HideInInspector]
     public NavMeshAgent agent;
 
@@ -52,6 +58,9 @@ public class MechEnemyFSM : MonoBehaviour
 
     [HideInInspector]
     public GameObject NPCgO; //NPC Game Object
+
+    [HideInInspector]
+    public Transform body;
 
     #endregion
 
@@ -64,12 +73,18 @@ public class MechEnemyFSM : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         NPCgO = this.gameObject;
 
+        body = transform.Find("Mech/Root/Pelvis/Body");
+
         MoveToState(seek);
     }
 
-    void Update()
+    void LateUpdate()
     {
-        
+        Vector3 targetDir = player.transform.position - transform.position;
+
+        float angleToTarget = Vector3.Angle(targetDir, transform.forward);
+
+        body.localRotation = Quaternion.Euler(new Vector3(angleToTarget, 180f, 0f));
     }
 
     public void MoveToState(MechBaseState state)

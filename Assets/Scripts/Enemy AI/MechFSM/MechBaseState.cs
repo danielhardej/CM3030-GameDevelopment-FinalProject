@@ -24,6 +24,7 @@ public abstract class MechBaseState
     protected NavMeshAgent agent;
     protected GameObject player;
     protected GameObject NPC;
+    protected Transform body;
 
     protected Animator animator;
 
@@ -42,6 +43,7 @@ public abstract class MechBaseState
         agent = npc.agent;
         player = npc.player;
         NPC = npc.NPCgO;
+        body = npc.body;
 
         animator = npc.animator;
 
