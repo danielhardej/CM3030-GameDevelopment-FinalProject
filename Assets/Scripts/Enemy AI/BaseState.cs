@@ -35,6 +35,8 @@ public abstract class BaseState
 
     protected bool hit_player;
 
+    protected Animator animator;
+
     protected EnemyFSM FSM;
     #endregion
 
@@ -53,6 +55,8 @@ public abstract class BaseState
         retreatRadius = npc.retreatRadius;
 
         hit_player = npc.hit_player;
+
+        animator = npc.animator;
 
         FSM = npc;
     }

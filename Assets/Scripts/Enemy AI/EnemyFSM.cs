@@ -22,6 +22,7 @@ public class EnemyFSM : MonoBehaviour
     [Header("States")]
     public SeekState seek = new SeekState();
     public BounceBackState bounceBack = new BounceBackState();
+    public SpawnState spawn = new SpawnState();
 
     [Header("NPC Settings")]
     [Tooltip("Maximum health")]
@@ -51,6 +52,11 @@ public class EnemyFSM : MonoBehaviour
     [HideInInspector]
     public bool hit_player;
 
+    [HideInInspector]
+    public Animator animator;
+
+    public bool isOnGround = false;
+
     #endregion
 
     // Start is called before the first frame update
@@ -58,16 +64,27 @@ public class EnemyFSM : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
+        animator = GetComponent<Animator>();
         NPCgO = this.gameObject;
 
         hit_player = false;
 
-        MoveToState(seek);
+        MoveToState(spawn);
     }
 
     void Update()
     {
-        
+        Debug.DrawLine(transform.position + Vector3.up, transform.position + Vector3.down * 1f, isOnGround ? Color.green : Color.red);
+    }
+
+    void FixedUpdate()
+    {
+        isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
+
+        if(isOnGround)
+        {
+            agent.enabled = true;
+        }
     }
 
     public void MoveToState(BaseState state)
@@ -93,6 +110,7 @@ public class EnemyFSM : MonoBehaviour
 
             if (health <= 0)
             {
+                GameController.Instance.IncreaseScore(10);
                 gameObject.SetActive(false);
             }
             
