@@ -7,7 +7,9 @@ using TMPro;
 public class HUDController : MonoBehaviour
 {
     public GameObject pauseMenu;
-    public AudioMixer audioMixer;
+    public GameObject backgroundMusicObject;
+    private AudioSource backgroundMusic;
+    private float backgroundMusicVolume;
     private TextMeshProUGUI scoreLabel;
     private int score;
     private int displayedScore;
@@ -18,6 +20,9 @@ public class HUDController : MonoBehaviour
         scoreLabel = GetComponentInChildren<TextMeshProUGUI>();
         score = 0;
         displayedScore = 0;
+
+        backgroundMusic = backgroundMusicObject?.GetComponent<AudioSource>();
+        backgroundMusicVolume = backgroundMusic.volume;
     }
 
     // Update is called once per frame
@@ -43,23 +48,31 @@ public class HUDController : MonoBehaviour
     public void OnPauseGame()
     {
         StartCoroutine(SlowDownGame());
-        StartCoroutine(SetLowPassFrquency(100f));
+        StartCoroutine(SetPitch(0.9f));
     }
 
     public void UnpauseGame()
     {
         StartCoroutine(SpeedUpGame());
-        StartCoroutine(SetLowPassFrquency(22000f));
+        StartCoroutine(SetPitch(1f));
     }
 
     private IEnumerator SpeedUpGame()
     {
         if(pauseMenu.activeInHierarchy)
         {
+
+            var currentVolume = backgroundMusicVolume;
+            var step = (currentVolume - backgroundMusicVolume)/240f;
+
             pauseMenu?.SetActive(false);
             for (int i = 0; i < 240; i++)
             {
                 Time.timeScale += 1/240f;
+                
+                currentVolume -= step;
+                backgroundMusic.volume = currentVolume;
+
                 if(Time.timeScale >= 1)
                 {
                     Time.timeScale = 1;
@@ -74,9 +87,16 @@ public class HUDController : MonoBehaviour
     {
         if(!pauseMenu.activeInHierarchy)
         {
+            var currentVolume = backgroundMusicVolume;
+            var step = (currentVolume - backgroundMusicVolume/2f)/240f;
+
             for (int i = 0; i < 240; i++)
             {
                 Time.timeScale -= 1/240f;
+
+                currentVolume -= step;
+                backgroundMusic.volume = currentVolume;
+                
                 if(Time.timeScale <= 0)
                 {
                     Time.timeScale = 0;
@@ -88,16 +108,22 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    private IEnumerator SetLowPassFrquency(float freq)
+    private IEnumerator SetPitch(float pitch)
     {
-        audioMixer.GetFloat("BG-LowpassFreq", out var currentFreq);
-        var step = (currentFreq - freq)/240;
 
-        for (int i = 0; i < 240; i++)
+        if(backgroundMusic != null)
         {
-            currentFreq -= step;
-            audioMixer.SetFloat("BG-LowpassFreq", currentFreq);
-            yield return null;
+            pitch = Mathf.Clamp(pitch, 0f, 1f);
+
+            var currentPitch = backgroundMusic.pitch;
+            var step = (currentPitch - pitch)/240;
+
+            for (int i = 0; i < 240; i++)
+            {
+                currentPitch -= step;
+                backgroundMusic.pitch = currentPitch;
+                yield return null;
+            }
         }
     }
 }
