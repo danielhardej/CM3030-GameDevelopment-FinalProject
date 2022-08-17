@@ -28,6 +28,13 @@ public abstract class MechBaseState
 
     protected Animator animator;
 
+    protected float mainGunFiringRate;
+    protected bool isFiringMain;
+    protected bool mainLR;
+    protected float secondaryGunFiringRate;
+    protected bool isFiringSecondary;
+    protected bool secondLR;
+
     protected float health;
     protected float range;
     protected float preferredRange;
@@ -46,6 +53,14 @@ public abstract class MechBaseState
         body = npc.body;
 
         animator = npc.animator;
+
+        mainGunFiringRate = npc.mainGunFiringRate;
+        isFiringMain = npc.isFiringMain;
+        mainLR = npc.mainLR;
+
+        secondaryGunFiringRate = npc.secondaryGunFiringRate;
+        isFiringSecondary = npc.isFiringSecondary;
+        secondLR = npc.secondLR;
 
         health = npc.health;
 

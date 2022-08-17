@@ -1281,7 +1281,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59d50e77f66f6b4fb42e471285ebbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BigCanon01L: {fileID: 483067012}
+  BigCanon01R: {fileID: 1232133934}
+  BigCanon02L: {fileID: 1968292844}
+  BigCanon02R: {fileID: 1818492365}
+  SmallCanon01L: {fileID: 1857819346}
+  SmallCanon01R: {fileID: 850657835}
+  SmallCanon02L: {fileID: 130329652}
+  SmallCanon02R: {fileID: 1563052788}
   animator: {fileID: 240923009}
+  mainGunFiringRate: 10
+  isFiringMain: 0
+  mainLR: 0
+  secondaryGunFiringRate: 3
+  isFiringSecondary: 0
+  secondLR: 0
+  audioBigCanon: {fileID: 8300000, guid: 37025960c61b77245872d410c9640b6b, type: 3}
+  audioSmallCanon: {fileID: 8300000, guid: 8d2ffe810fa89ef4fad702cafd3838a7, type: 3}
   health: 100
   range: 30
   preferredRange: 20
@@ -1314,28 +1330,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &240923006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 240923003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3815b9daabcf348afed1c0b4075054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BigCanon01L: {fileID: 483067012}
-  BigCanon01R: {fileID: 1232133934}
-  BigCanon02L: {fileID: 1968292844}
-  BigCanon02R: {fileID: 1818492365}
-  SmallCanon01L: {fileID: 1857819346}
-  SmallCanon01R: {fileID: 850657835}
-  SmallCanon02L: {fileID: 130329652}
-  SmallCanon02R: {fileID: 1563052788}
-  audioBigCanon: {fileID: 8300000, guid: 37025960c61b77245872d410c9640b6b, type: 3}
-  audioSmallCanon: {fileID: 8300000, guid: 8d2ffe810fa89ef4fad702cafd3838a7, type: 3}
 --- !u!114 &240923007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,7 +1721,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.754717, g: 0.13883947, b: 0.13883947, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2458,7 +2452,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.754717, g: 0.13883947, b: 0.13883947, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2968,7 +2962,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.754717, g: 0.13883947, b: 0.13883947, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -3199,7 +3193,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.754717, g: 0.13883947, b: 0.13883947, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

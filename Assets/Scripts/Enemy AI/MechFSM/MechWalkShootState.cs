@@ -37,17 +37,15 @@ public class MechWalkShootState : MechBaseState
          * Here we are getting the FSM MonoBehaviour to begin this coroutine.
          */
         FSM.StartCoroutine(SeekStatusCheck());
-
     }
 
     IEnumerator SeekStatusCheck()
     {
+        FSM.StartCoroutine(FireMainCannons());
+        FSM.StartCoroutine(FireSecondaryCannons());
+
         // Waits the prescribed amount of time
         yield return new WaitForSeconds(targetPositionUpdateTime);
-
-        // Rotate and Fire
-        RotateTorso();
-        FireAtPlayer();
 
         Debug.Log(Vector3.Distance(NPC.transform.position, destination));
 
@@ -68,6 +66,45 @@ public class MechWalkShootState : MechBaseState
         FSM.StartCoroutine(SeekStatusCheck());
     }
 
+    IEnumerator FireMainCannons()
+    {
+        if(!isFiringMain) {
+            if(mainLR)
+            {
+                FSM.ShootBigCanonA();
+            }
+            else
+            {
+                FSM.ShootBigCanonB();
+            }
+            mainLR = !mainLR;
+        }
+
+        // Waits the prescribed amount of time
+        yield return new WaitForSeconds(mainGunFiringRate);
+        FSM.StartCoroutine(FireMainCannons());
+    }
+
+    IEnumerator FireSecondaryCannons()
+    {
+        if (!isFiringSecondary)
+        {
+            if (secondLR)
+            {
+                FSM.ShootSmallCanonA();
+            }
+            else
+            {
+                FSM.ShootSmallCanonB();
+            }
+            secondLR = !secondLR;
+        }
+
+        // Waits the prescribed amount of time
+        yield return new WaitForSeconds(secondaryGunFiringRate);
+        FSM.StartCoroutine(FireSecondaryCannons());
+    }
+
     /// <summary>
     /// Method <c>RotateTorso</c> Rotates the mech's torso to face the player.
     /// </summary>
@@ -81,7 +118,7 @@ public class MechWalkShootState : MechBaseState
     /// </summary>
     private void FireAtPlayer()
     {
-
+        
     }
 
     /// <summary>

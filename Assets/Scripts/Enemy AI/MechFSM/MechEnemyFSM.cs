@@ -26,7 +26,35 @@ public class MechEnemyFSM : MonoBehaviour
     public MechWalkShootState walkAndShoot = new MechWalkShootState();
 
     [Header("Animation")]
+    public LineRenderer BigCanon01L;
+    public LineRenderer BigCanon01R;
+    public LineRenderer BigCanon02L;
+    public LineRenderer BigCanon02R;
+    public LineRenderer SmallCanon01L;
+    public LineRenderer SmallCanon01R;
+    public LineRenderer SmallCanon02L;
+    public LineRenderer SmallCanon02R;
+    [HideInInspector]
     public Animator animator;
+
+    [Header("Guns")]
+    public float mainGunFiringRate;
+    [HideInInspector]
+    public bool isFiringMain;
+    [HideInInspector]
+    public bool mainLR;
+
+    public float secondaryGunFiringRate;
+    [HideInInspector]
+    public bool isFiringSecondary;
+    [HideInInspector]
+    public bool secondLR;
+
+    [Header("Sounds")]
+    public AudioClip audioBigCanon;
+    public AudioClip audioSmallCanon;
+    [HideInInspector]
+    AudioSource audioSource;
 
     [Header("NPC Settings")]
     [Tooltip("Maximum health")]
@@ -69,6 +97,13 @@ public class MechEnemyFSM : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
+        isFiringMain = false;
+        mainLR = false;
+        isFiringSecondary = false;
+        secondLR = false;
+
+        audioSource = GetComponent<AudioSource>();
+
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
         NPCgO = this.gameObject;
@@ -78,13 +113,22 @@ public class MechEnemyFSM : MonoBehaviour
         MoveToState(seek);
     }
 
+    void Update()
+    {
+        DrawLine(BigCanon01L);
+        DrawLine(BigCanon01R);
+        DrawLine(BigCanon02L);
+        DrawLine(BigCanon02R);
+
+        DrawLine(SmallCanon01L);
+        DrawLine(SmallCanon01R);
+        DrawLine(SmallCanon02L);
+        DrawLine(SmallCanon02R);
+    }
+
     void LateUpdate()
     {
-        Vector3 targetDir = player.transform.position - transform.position;
-
-        float angleToTarget = Vector3.Angle(targetDir, transform.forward);
-
-        body.localRotation = Quaternion.Euler(new Vector3(angleToTarget, 180f, 0f));
+        TurnToFaceTarget(player);
     }
 
     public void MoveToState(MechBaseState state)
@@ -106,4 +150,132 @@ public class MechEnemyFSM : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    /// <summary>
+    /// Method <c>TurnToFaceTarget</c> Turns the mech's torso to face the target
+    /// </summary>
+    private void TurnToFaceTarget(GameObject target)
+    {
+        Vector3 targetDir = target.transform.position - transform.position;
+
+        float angleToTarget = Vector3.Angle(targetDir, transform.forward);
+
+        body.localRotation = Quaternion.Euler(new Vector3(angleToTarget, 180f, 0f));
+    }
+
+    /// <summary>
+    /// Method <c>DrawLine</c> Sets the positions of the linerenderer passed through to draw between the player and the guns.
+    /// </summary>
+    private void DrawLine(LineRenderer lr)
+    {
+        Vector3 start = lr.transform.position;
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, player.transform.position);
+    }
+
+    #region Cannon stuff
+    //Big Canons
+    public void ShootBigCanonA()
+    {
+
+        audioSource.clip = audioBigCanon;
+        audioSource.Play();
+
+        Color c = BigCanon01L.material.GetColor("_TintColor");
+        c.a = 1f;
+        BigCanon01L.material.SetColor("_TintColor", c);
+        BigCanon01R.material.SetColor("_TintColor", c);
+
+        StartCoroutine("FadoutBigCanon01");
+    }
+
+    IEnumerator FadoutBigCanon01()
+    {
+        Color c = BigCanon01L.material.GetColor("_TintColor");
+        while (c.a > 0)
+        {
+            c.a -= 0.1f;
+            BigCanon01L.material.SetColor("_TintColor", c);
+            BigCanon01R.material.SetColor("_TintColor", c);
+            yield return null;
+        }
+    }
+
+    public void ShootBigCanonB()
+    {
+
+        audioSource.clip = audioBigCanon;
+        audioSource.Play();
+
+        Color c = BigCanon01L.material.GetColor("_TintColor");
+        c.a = 1f;
+        BigCanon02L.material.SetColor("_TintColor", c);
+        BigCanon02R.material.SetColor("_TintColor", c);
+        StartCoroutine("FadoutBigCanon02");
+    }
+
+    IEnumerator FadoutBigCanon02()
+    {
+        Color c = BigCanon02L.material.GetColor("_TintColor");
+        while (c.a > 0)
+        {
+            c.a -= 0.1f;
+            BigCanon02L.material.SetColor("_TintColor", c);
+            BigCanon02R.material.SetColor("_TintColor", c);
+            yield return null;
+        }
+    }
+
+
+    // Small Canons
+    public void ShootSmallCanonA()
+    {
+
+        audioSource.clip = audioSmallCanon;
+        audioSource.Play();
+
+        Color c = SmallCanon01L.material.GetColor("_TintColor");
+        c.a = 1f;
+        SmallCanon01L.material.SetColor("_TintColor", c);
+        SmallCanon01R.material.SetColor("_TintColor", c);
+        StartCoroutine("FadoutSmallCanon01");
+    }
+
+    IEnumerator FadoutSmallCanon01()
+    {
+        Color c = SmallCanon01L.material.GetColor("_TintColor");
+        while (c.a > 0)
+        {
+            c.a -= 0.1f;
+            SmallCanon01L.material.SetColor("_TintColor", c);
+            SmallCanon01R.material.SetColor("_TintColor", c);
+            yield return null;
+        }
+    }
+
+    public void ShootSmallCanonB()
+    {
+
+        audioSource.clip = audioSmallCanon;
+        audioSource.Play();
+
+        Color c = SmallCanon01L.material.GetColor("_TintColor");
+        c.a = 1f;
+        SmallCanon02L.material.SetColor("_TintColor", c);
+        SmallCanon02R.material.SetColor("_TintColor", c);
+        StartCoroutine("FadoutSmallCanon02");
+    }
+
+    IEnumerator FadoutSmallCanon02()
+    {
+        Color c = SmallCanon02L.material.GetColor("_TintColor");
+        while (c.a > 0)
+        {
+            c.a -= 0.1f;
+            SmallCanon02L.material.SetColor("_TintColor", c);
+            SmallCanon02R.material.SetColor("_TintColor", c);
+            yield return null;
+        }
+    }
+    #endregion
 }
