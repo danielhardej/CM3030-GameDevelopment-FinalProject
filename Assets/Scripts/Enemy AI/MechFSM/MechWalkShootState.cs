@@ -41,11 +41,11 @@ public class MechWalkShootState : MechBaseState
 
     IEnumerator SeekStatusCheck()
     {
-        FSM.StartCoroutine(FireMainCannons());
-        FSM.StartCoroutine(FireSecondaryCannons());
-
         // Waits the prescribed amount of time
         yield return new WaitForSeconds(targetPositionUpdateTime);
+
+        FSM.StartCoroutine(FireMainCannons());
+        FSM.StartCoroutine(FireSecondaryCannons());
 
         Debug.Log(Vector3.Distance(NPC.transform.position, destination));
 
@@ -68,7 +68,10 @@ public class MechWalkShootState : MechBaseState
 
     IEnumerator FireMainCannons()
     {
-        if(!isFiringMain) {
+        // Waits the prescribed amount of time
+        yield return new WaitForSeconds(mainGunFiringRate);
+
+        if (!isFiringMain) {
             if(mainLR)
             {
                 FSM.ShootBigCanonA();
@@ -79,14 +82,15 @@ public class MechWalkShootState : MechBaseState
             }
             mainLR = !mainLR;
         }
-
-        // Waits the prescribed amount of time
-        yield return new WaitForSeconds(mainGunFiringRate);
+        
         FSM.StartCoroutine(FireMainCannons());
     }
 
     IEnumerator FireSecondaryCannons()
     {
+        // Waits the prescribed amount of time
+        yield return new WaitForSeconds(secondaryGunFiringRate);
+
         if (!isFiringSecondary)
         {
             if (secondLR)
@@ -100,8 +104,6 @@ public class MechWalkShootState : MechBaseState
             secondLR = !secondLR;
         }
 
-        // Waits the prescribed amount of time
-        yield return new WaitForSeconds(secondaryGunFiringRate);
         FSM.StartCoroutine(FireSecondaryCannons());
     }
 
