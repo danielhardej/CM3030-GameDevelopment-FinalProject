@@ -44,8 +44,8 @@ public class MechWalkShootState : MechBaseState
         // Waits the prescribed amount of time
         yield return new WaitForSeconds(targetPositionUpdateTime);
 
-        FSM.StartCoroutine(FireMainCannons());
-        FSM.StartCoroutine(FireSecondaryCannons());
+        FireMainCannons();
+        FireSecondaryCannons();
 
         Debug.Log(Vector3.Distance(NPC.transform.position, destination));
 
@@ -66,11 +66,8 @@ public class MechWalkShootState : MechBaseState
         FSM.StartCoroutine(SeekStatusCheck());
     }
 
-    IEnumerator FireMainCannons()
+    void FireMainCannons()
     {
-        // Waits the prescribed amount of time
-        yield return new WaitForSeconds(mainGunFiringRate);
-
         if (!isFiringMain) {
             if(mainLR)
             {
@@ -81,16 +78,22 @@ public class MechWalkShootState : MechBaseState
                 FSM.ShootBigCanonB();
             }
             mainLR = !mainLR;
+            
+            isFiringMain = true;
+            FSM.StartCoroutine(MainCooldown());
         }
-        
-        FSM.StartCoroutine(FireMainCannons());
     }
 
-    IEnumerator FireSecondaryCannons()
+    IEnumerator MainCooldown()
     {
         // Waits the prescribed amount of time
-        yield return new WaitForSeconds(secondaryGunFiringRate);
+        yield return new WaitForSeconds(mainGunFiringRate);
 
+        isFiringMain = false;
+    }
+
+    void FireSecondaryCannons()
+    {
         if (!isFiringSecondary)
         {
             if (secondLR)
@@ -102,9 +105,18 @@ public class MechWalkShootState : MechBaseState
                 FSM.ShootSmallCanonB();
             }
             secondLR = !secondLR;
-        }
 
-        FSM.StartCoroutine(FireSecondaryCannons());
+            isFiringSecondary = true;
+            FSM.StartCoroutine(SecondaryCooldown());
+        }
+    }
+
+    IEnumerator SecondaryCooldown()
+    {
+        // Waits the prescribed amount of time
+        yield return new WaitForSeconds(secondaryGunFiringRate);
+
+        isFiringSecondary = false;
     }
 
     /// <summary>

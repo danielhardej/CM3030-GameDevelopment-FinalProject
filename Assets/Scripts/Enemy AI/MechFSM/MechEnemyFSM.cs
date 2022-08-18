@@ -115,15 +115,15 @@ public class MechEnemyFSM : MonoBehaviour
 
     void Update()
     {
-        DrawLine(BigCanon01L);
-        DrawLine(BigCanon01R);
-        DrawLine(BigCanon02L);
-        DrawLine(BigCanon02R);
+        DrawLine(BigCanon01L, 2.75f);
+        DrawLine(BigCanon01R, 2.75f);
+        DrawLine(BigCanon02L, 2.75f);
+        DrawLine(BigCanon02R, 2.75f);
 
-        DrawLine(SmallCanon01L);
-        DrawLine(SmallCanon01R);
-        DrawLine(SmallCanon02L);
-        DrawLine(SmallCanon02R);
+        DrawLine(SmallCanon01L, 1.25f);
+        DrawLine(SmallCanon01R, 1.25f);
+        DrawLine(SmallCanon02L, 1.25f);
+        DrawLine(SmallCanon02R, 1.25f);
     }
 
     void LateUpdate()
@@ -156,19 +156,35 @@ public class MechEnemyFSM : MonoBehaviour
     /// </summary>
     private void TurnToFaceTarget(GameObject target)
     {
-        Vector3 targetDir = target.transform.position - transform.position;
+        // Determine which direction to rotate towards
+        Vector3 targetDirection = target.transform.position - transform.position;
 
-        float angleToTarget = Vector3.Angle(targetDir, transform.forward);
+        // The step size is equal to speed times frame time.
+        float singleStep = 100 * Time.deltaTime;
 
-        body.localRotation = Quaternion.Euler(new Vector3(angleToTarget, 180f, 0f));
+        // Rotate the forward vector towards the target direction by one step
+        Vector3 newDirection = Vector3.RotateTowards(body.forward, targetDirection, singleStep, 0.0f);
+
+        // Draw a ray pointing at our target in
+        Debug.DrawRay(transform.position, newDirection* Vector3.Distance(transform.position, player.transform.position), Color.yellow);
+
+        // Calculate a rotation a step closer to the target and applies rotation to this object
+        Quaternion rotation = Quaternion.LookRotation(newDirection, transform.forward);
+
+        Quaternion q = rotation;
+        q.eulerAngles = new Vector3(q.eulerAngles.x, q.eulerAngles.y, -90);
+
+        body.rotation = q;
     }
 
     /// <summary>
     /// Method <c>DrawLine</c> Sets the positions of the linerenderer passed through to draw between the player and the guns.
     /// </summary>
-    private void DrawLine(LineRenderer lr)
+    private void DrawLine(LineRenderer lr, float forwardOffset = 0)
     {
-        Vector3 start = lr.transform.position;
+        Vector3 offset = lr.transform.right * -forwardOffset;
+
+        Vector3 start = lr.transform.position + offset;
         lr.SetPosition(0, start);
         lr.SetPosition(1, player.transform.position);
     }
