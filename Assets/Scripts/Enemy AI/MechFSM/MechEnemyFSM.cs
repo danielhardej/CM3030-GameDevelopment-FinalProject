@@ -38,13 +38,16 @@ public class MechEnemyFSM : MonoBehaviour
     public Animator animator;
 
     [Header("Guns")]
+    public GameObject AimingPoint;
     public float mainGunFiringRate;
+    public float mainGunDamage;
     [HideInInspector]
     public bool isFiringMain;
     [HideInInspector]
     public bool mainLR;
 
     public float secondaryGunFiringRate;
+    public float secondaryGunDamage;
     [HideInInspector]
     public bool isFiringSecondary;
     [HideInInspector]
@@ -71,12 +74,6 @@ public class MechEnemyFSM : MonoBehaviour
     public float sightHeightOffset;
     [Tooltip("The mech's target location for it's NavMeshAgent"), ReadOnly]
     public Vector3 destination;
-
-    //[Header("Targeting")]
-    //[Tooltip("Left/Right rotation angle toward target"), ReadOnly]
-    //public float angleToTarget;
-    //[Tooltip("Up/Down rotation angle toward target"), ReadOnly]
-    //public float targetDepression;
 
     [HideInInspector]
     public NavMeshAgent agent;
@@ -145,6 +142,8 @@ public class MechEnemyFSM : MonoBehaviour
     {
         health -= damage;
 
+        Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
+
         if (health <= 0)
         {
             gameObject.SetActive(false);
@@ -186,13 +185,41 @@ public class MechEnemyFSM : MonoBehaviour
 
         Vector3 start = lr.transform.position + offset;
         lr.SetPosition(0, start);
-        lr.SetPosition(1, player.transform.position);
+        lr.SetPosition(1, AimingPoint.transform.position);
     }
 
     #region Cannon stuff
+    RaycastHit FireAtTarget(Vector3 from, GameObject target, float damage)
+    {
+        // Fire a raycast from the centre of the mech at the player to see if it hits.
+        Vector3 playerDirectionVector = (target.transform.position - from).normalized;
+
+        // Draw a debug ray so we can see it
+        Debug.DrawRay(from, playerDirectionVector * Vector3.Distance(from, target.transform.position), Color.cyan);
+
+        // Bit shift the index of the layer (8) to get a bit mask
+        int layerMask = 1 << 8;
+
+        // This would cast rays only against colliders in layer 8.
+        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+        layerMask = ~layerMask;
+
+        //Checks if we hit something
+        if (Physics.Raycast(from, playerDirectionVector, out RaycastHit hitInfo, range, layerMask))
+        {
+            // If we did, apply necessary damage!
+            hitInfo.rigidbody.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+        }
+
+        // Return this information in case it's useful
+        return hitInfo;
+    }
+
     //Big Canons
     public void ShootBigCanonA()
     {
+        FireAtTarget(BigCanon01L.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(BigCanon01R.transform.position, AimingPoint, mainGunDamage);
 
         audioSource.clip = audioBigCanon;
         audioSource.Play();
@@ -219,6 +246,8 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void ShootBigCanonB()
     {
+        FireAtTarget(BigCanon02L.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(BigCanon02R.transform.position, AimingPoint, mainGunDamage);
 
         audioSource.clip = audioBigCanon;
         audioSource.Play();
@@ -246,6 +275,8 @@ public class MechEnemyFSM : MonoBehaviour
     // Small Canons
     public void ShootSmallCanonA()
     {
+        FireAtTarget(SmallCanon01L.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(SmallCanon01R.transform.position, AimingPoint, mainGunDamage);
 
         audioSource.clip = audioSmallCanon;
         audioSource.Play();
@@ -271,6 +302,8 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void ShootSmallCanonB()
     {
+        FireAtTarget(SmallCanon02L.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(SmallCanon02R.transform.position, AimingPoint, mainGunDamage);
 
         audioSource.clip = audioSmallCanon;
         audioSource.Play();

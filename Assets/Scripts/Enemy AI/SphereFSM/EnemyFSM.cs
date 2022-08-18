@@ -53,7 +53,7 @@ public class EnemyFSM : MonoBehaviour
     public bool hit_player;
 
     [HideInInspector]
-    public Animator animator;
+    //public Animator animator;
 
     public bool isOnGround = false;
 
@@ -64,7 +64,7 @@ public class EnemyFSM : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         NPCgO = this.gameObject;
 
         hit_player = false;

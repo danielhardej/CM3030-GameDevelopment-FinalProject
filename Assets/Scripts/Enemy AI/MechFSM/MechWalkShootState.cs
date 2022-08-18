@@ -47,7 +47,7 @@ public class MechWalkShootState : MechBaseState
         FireMainCannons();
         FireSecondaryCannons();
 
-        Debug.Log(Vector3.Distance(NPC.transform.position, destination));
+        //Debug.Log(Vector3.Distance(NPC.transform.position, destination));
 
         // If we have lost line of sight with the player, go back to seeking.
         if (!HasLineOfSight())

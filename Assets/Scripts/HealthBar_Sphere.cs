@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 //[RequireComponent(typeof(EnemyFSM))]
 //[RequireComponent(typeof(Image))]
-public class HealthBar : MonoBehaviour
+public class HealthBar_Sphere : MonoBehaviour
 {
     EnemyFSM fsm;
     float maxHealth;

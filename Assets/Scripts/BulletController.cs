@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
+    public float damage = 25;
     public float initialVelocity = 3000;
 
     public new Rigidbody rigidbody;
@@ -29,8 +29,10 @@ public class BulletController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        Debug.Log("Bullet impact: " + collision.gameObject);
+
         // New damage application method
-        collision.gameObject.SendMessage("ApplyDamage", 25, SendMessageOptions.DontRequireReceiver);
+        collision.gameObject.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
     }
 
 }
