@@ -218,6 +218,7 @@ public class MechEnemyFSM : MonoBehaviour
     //Big Canons
     public void ShootBigCanonA()
     {
+        animator.SetTrigger("ShootBigCanonA");
         FireAtTarget(BigCanon01L.transform.position, AimingPoint, mainGunDamage);
         FireAtTarget(BigCanon01R.transform.position, AimingPoint, mainGunDamage);
 
@@ -246,6 +247,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void ShootBigCanonB()
     {
+        animator.SetTrigger("ShootBigCanonB");
         FireAtTarget(BigCanon02L.transform.position, AimingPoint, mainGunDamage);
         FireAtTarget(BigCanon02R.transform.position, AimingPoint, mainGunDamage);
 
@@ -275,6 +277,7 @@ public class MechEnemyFSM : MonoBehaviour
     // Small Canons
     public void ShootSmallCanonA()
     {
+        animator.SetTrigger("ShootSmallCanonA");
         FireAtTarget(SmallCanon01L.transform.position, AimingPoint, mainGunDamage);
         FireAtTarget(SmallCanon01R.transform.position, AimingPoint, mainGunDamage);
 
@@ -302,6 +305,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void ShootSmallCanonB()
     {
+        animator.SetTrigger("ShootSmallCanonB");
         FireAtTarget(SmallCanon02L.transform.position, AimingPoint, mainGunDamage);
         FireAtTarget(SmallCanon02R.transform.position, AimingPoint, mainGunDamage);
 
