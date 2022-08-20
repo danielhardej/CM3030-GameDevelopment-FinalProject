@@ -208,7 +208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193070930}
-  m_LocalRotation: {x: -0.11917285, y: 0.87877566, z: -0.29318258, w: -0.3572047}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDelay: 0.5
-  maxEnemies: 6
+  maxEnemies: 1
   spawnType: 1
   spawnPoints:
   - {fileID: 220738153}
@@ -1122,7 +1122,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6749180539318132311, guid: f8884e82ab007bf47948d374739d0436, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f8884e82ab007bf47948d374739d0436, type: 3}
 --- !u!1 &1156311183
 GameObject:
@@ -1151,7 +1152,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156311183}
-  m_LocalRotation: {x: -0.11917285, y: 0.87877566, z: -0.29318258, w: -0.3572047}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

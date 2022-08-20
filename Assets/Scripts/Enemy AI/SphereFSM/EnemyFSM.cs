@@ -124,6 +124,7 @@ public class EnemyFSM : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         health -= damage;
+        GameController.Instance.IncreaseScore(10);
 
         if (health <= 0)
         {

@@ -159,6 +159,7 @@ public class MechEnemyFSM : MonoBehaviour
         health -= damage;
 
         Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
+        GameController.Instance.IncreaseScore(10);
 
         if (health <= 0)
         {
