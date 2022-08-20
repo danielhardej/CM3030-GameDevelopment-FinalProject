@@ -11,10 +11,10 @@ public class FootSteps : MonoBehaviour {
 	void Start () {
 		ASFootStep = GetComponent<AudioSource> ();
 		ASFootStep.clip = audioFootStep;
-
 	}
 	
 	void FootStep() {
-		ASFootStep.Play ();
+		Debug.Log("Step");
+        ASFootStep.Play ();
 	}
 }

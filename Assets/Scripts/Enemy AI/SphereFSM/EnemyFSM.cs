@@ -53,7 +53,7 @@ public class EnemyFSM : MonoBehaviour
     public bool hit_player;
 
     [HideInInspector]
-    public Animator animator;
+    //public Animator animator;
 
     public bool isOnGround = false;
 
@@ -64,7 +64,7 @@ public class EnemyFSM : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         NPCgO = this.gameObject;
 
         hit_player = false;
@@ -102,7 +102,9 @@ public class EnemyFSM : MonoBehaviour
             //Debug.Log("Player hit!");
             hit_player = true;
         }
+
         // Temporary destruction on hit code
+        /*
         else if (collision.gameObject.CompareTag("Bullet"))
         {
             //Debug.Log("Player hit!");
@@ -114,6 +116,18 @@ public class EnemyFSM : MonoBehaviour
                 gameObject.SetActive(false);
             }
             
+        }
+        */
+    }
+
+    //ApplyDamage method to receive messages
+    public void ApplyDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
