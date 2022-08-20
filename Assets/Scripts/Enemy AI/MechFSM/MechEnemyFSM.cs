@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -24,6 +25,7 @@ public class MechEnemyFSM : MonoBehaviour
     [Header("States")]
     public MechSeekState seek = new MechSeekState();
     public MechWalkShootState walkAndShoot = new MechWalkShootState();
+    public MechSpawnState spawnState = new MechSpawnState();
 
     [Header("Animation")]
     public LineRenderer BigCanon01L;
@@ -87,6 +89,8 @@ public class MechEnemyFSM : MonoBehaviour
     [HideInInspector]
     public Transform body;
 
+    public bool isOnGround = false;
+
     #endregion
 
     // Start is called before the first frame update
@@ -107,7 +111,9 @@ public class MechEnemyFSM : MonoBehaviour
 
         body = transform.Find("Mech/Root/Pelvis/Body");
 
-        MoveToState(seek);
+        AimingPoint = GameObject.FindGameObjectsWithTag("Player").First().transform.Find("AimPoint").gameObject;
+
+        MoveToState(spawnState);
     }
 
     void Update()
@@ -121,6 +127,16 @@ public class MechEnemyFSM : MonoBehaviour
         DrawLine(SmallCanon01R, 1.25f);
         DrawLine(SmallCanon02L, 1.25f);
         DrawLine(SmallCanon02R, 1.25f);
+    }
+
+    void FixedUpdate()
+    {
+        isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
+
+        if(isOnGround)
+        {
+            agent.enabled = true;
+        }
     }
 
     void LateUpdate()
@@ -181,6 +197,8 @@ public class MechEnemyFSM : MonoBehaviour
     /// </summary>
     private void DrawLine(LineRenderer lr, float forwardOffset = 0)
     {
+        if(AimingPoint == null) return;
+
         Vector3 offset = lr.transform.right * -forwardOffset;
 
         Vector3 start = lr.transform.position + offset;
@@ -191,6 +209,7 @@ public class MechEnemyFSM : MonoBehaviour
     #region Cannon stuff
     RaycastHit FireAtTarget(Vector3 from, GameObject target, float damage)
     {
+        if(target == null) return new RaycastHit();
         // Fire a raycast from the centre of the mech at the player to see if it hits.
         Vector3 playerDirectionVector = (target.transform.position - from).normalized;
 
