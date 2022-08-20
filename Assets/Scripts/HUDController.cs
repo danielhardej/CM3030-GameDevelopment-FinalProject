@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class HUDController : MonoBehaviour
@@ -55,6 +56,28 @@ public class HUDController : MonoBehaviour
     {
         StartCoroutine(SpeedUpGame());
         StartCoroutine(SetPitch(1f));
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("MenuScene");
+        Time.timeScale = 1;
+    }
+
+    public void RestartGame()
+    {
+        StartCoroutine(RestartingGame());
+        Time.timeScale = 1;
+    }
+
+    private IEnumerator RestartingGame()
+    {
+        var op = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
+
+        while(!op.isDone)
+        {
+            yield return null;  
+        }
     }
 
     private IEnumerator SpeedUpGame()
