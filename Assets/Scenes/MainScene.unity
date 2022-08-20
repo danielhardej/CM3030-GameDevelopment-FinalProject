@@ -208,7 +208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193070930}
-  m_LocalRotation: {x: -0.11917287, y: 0.87877566, z: -0.29318255, w: -0.35720474}
+  m_LocalRotation: {x: -0.11917284, y: 0.87877566, z: -0.29318258, w: -0.35720468}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -441,7 +441,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 315225409}
-  - {fileID: 1257113466}
   - {fileID: 905196554}
   - {fileID: 1517534429}
   m_Father: {fileID: 0}
@@ -459,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2214a4bb73d96747927848b35857954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1257113465}
+  pauseMenu: {fileID: 0}
   backgroundMusicObject: {fileID: 1517534428}
 --- !u!114 &451843750
 MonoBehaviour:
@@ -832,7 +831,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 451843748}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &905196555
 MonoBehaviour:
@@ -999,7 +998,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156311183}
-  m_LocalRotation: {x: -0.11917287, y: 0.87877566, z: -0.29318255, w: -0.35720474}
+  m_LocalRotation: {x: -0.11917284, y: 0.87877566, z: -0.29318258, w: -0.35720468}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1122,18 +1121,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &1257113465 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7106857497971952642, guid: f8884e82ab007bf47948d374739d0436,
-    type: 3}
-  m_PrefabInstance: {fileID: 2493780941117770894}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1257113466 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3422035091637643138, guid: f8884e82ab007bf47948d374739d0436,
-    type: 3}
-  m_PrefabInstance: {fileID: 2493780941117770894}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1309263496
 GameObject:
   m_ObjectHideFlags: 3
@@ -1358,7 +1345,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 451843748}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1517534430
 AudioSource:
