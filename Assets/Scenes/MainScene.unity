@@ -449,6 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1382809503}
   backgroundMusicObject: {fileID: 1517534428}
+  menuFadeInTime: 60
 --- !u!114 &451843750
 MonoBehaviour:
   m_ObjectHideFlags: 0

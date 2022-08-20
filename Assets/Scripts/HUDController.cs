@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -9,6 +7,9 @@ public class HUDController : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject backgroundMusicObject;
+
+    [Tooltip("Menu fade intime in Frames")]
+    public int menuFadeInTime = 240;
     private AudioSource backgroundMusic;
     private float backgroundMusicVolume;
     private TextMeshProUGUI scoreLabel;
@@ -86,12 +87,12 @@ public class HUDController : MonoBehaviour
         {
 
             var currentVolume = backgroundMusicVolume;
-            var step = (currentVolume - backgroundMusicVolume)/240f;
+            var step = (currentVolume - backgroundMusicVolume)/menuFadeInTime;
 
             pauseMenu?.SetActive(false);
-            for (int i = 0; i < 240; i++)
+            for (int i = 0; i < menuFadeInTime; i++)
             {
-                Time.timeScale += 1/240f;
+                Time.timeScale += 1f/menuFadeInTime;
                 
                 currentVolume -= step;
                 backgroundMusic.volume = currentVolume;
@@ -103,6 +104,7 @@ public class HUDController : MonoBehaviour
                 }
                 yield return null;
             }
+            
         }
     }
 
@@ -111,11 +113,11 @@ public class HUDController : MonoBehaviour
         if(!pauseMenu.activeInHierarchy)
         {
             var currentVolume = backgroundMusicVolume;
-            var step = (currentVolume - backgroundMusicVolume/2f)/240f;
+            var step = (currentVolume - backgroundMusicVolume/2f)/menuFadeInTime;
 
-            for (int i = 0; i < 240; i++)
+            for (int i = 0; i < menuFadeInTime; i++)
             {
-                Time.timeScale -= 1/240f;
+                Time.timeScale -= 1f/menuFadeInTime;
 
                 currentVolume -= step;
                 backgroundMusic.volume = currentVolume;
@@ -139,9 +141,9 @@ public class HUDController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, 0f, 1f);
 
             var currentPitch = backgroundMusic.pitch;
-            var step = (currentPitch - pitch)/240;
+            var step = (currentPitch - pitch)/menuFadeInTime;
 
-            for (int i = 0; i < 240; i++)
+            for (int i = 0; i < menuFadeInTime; i++)
             {
                 currentPitch -= step;
                 backgroundMusic.pitch = currentPitch;

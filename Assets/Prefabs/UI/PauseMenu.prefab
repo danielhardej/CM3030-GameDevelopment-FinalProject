@@ -664,7 +664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WASD - movement     Mouse - aim        LMB - shoot
+  m_text: WASD or Arrows - movement     Mouse - aim      LMB or space - shoot
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1f34f2e34fcd07d44825867d32a5ef67, type: 2}
   m_sharedMaterial: {fileID: 4051336715478282778, guid: 1f34f2e34fcd07d44825867d32a5ef67,
@@ -728,7 +728,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -196.4685, w: 23.789917}
+  m_margin: {x: 0, y: 0, z: -237.75354, w: 23.789917}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
