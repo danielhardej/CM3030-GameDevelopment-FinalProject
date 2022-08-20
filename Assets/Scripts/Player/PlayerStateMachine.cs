@@ -11,6 +11,8 @@ public class PlayerStateMachine : MonoBehaviour
     public Dictionary<string, PlayerState> _states;
 
     public GameObject PlayerModel;
+
+    public float playerHealth;
     
     public Vector3 forward => PlayerModel.transform.forward;
 
@@ -62,5 +64,20 @@ public class PlayerStateMachine : MonoBehaviour
         Vector2 inputVec = input.Get<Vector2>();
 
         _currentState.Move(inputVec);
+    }
+
+    /// <summary>
+    /// Method <c>ApplyDamage</c> Receives a message sent to this object in order to apply a weapon's damage to this entitiy.
+    /// </summary>
+    public void ApplyDamage(float damage)
+    {
+        playerHealth -= damage;
+
+        //Debug.Log("Hit! Took: " + damage + " damage. " + playerHealth + " health remaining");
+
+        //if (health <= 0)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 }

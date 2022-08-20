@@ -56,7 +56,7 @@ public abstract class BaseState
 
         hit_player = npc.hit_player;
 
-        animator = npc.animator;
+        //animator = npc.animator;
 
         FSM = npc;
     }
