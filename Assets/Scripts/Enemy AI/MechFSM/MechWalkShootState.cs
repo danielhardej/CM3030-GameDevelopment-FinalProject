@@ -23,9 +23,19 @@ using UnityEngine.AI;
 /// </summary>
 public class MechWalkShootState : MechBaseState
 {
+
+    float timeSinceStateEntered;
+
+    float timeSinceMainGunsFired;
+    float timeSinceSecondaryGunsFired;
+
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
+
+        timeSinceStateEntered = 0f;
+        timeSinceMainGunsFired = mainGunFiringRate;
+        timeSinceSecondaryGunsFired = secondaryGunFiringRate;
 
         // Set a new destination for the navmeshagent
         SetDestination();
@@ -36,7 +46,39 @@ public class MechWalkShootState : MechBaseState
          * 
          * Here we are getting the FSM MonoBehaviour to begin this coroutine.
          */
-        FSM.StartCoroutine(SeekStatusCheck());
+        //FSM.StartCoroutine(SeekStatusCheck());
+    }
+
+    public override void Update()
+    {
+    }
+
+    public override void FixedUpdate()
+    {
+        timeSinceStateEntered += Time.fixedDeltaTime;
+
+        // Waits the prescribed amount of time
+        if(timeSinceStateEntered > targetPositionUpdateTime)
+        {
+            // If we have lost line of sight with the player, go back to seeking.
+            if (!HasLineOfSight())
+            {
+                // Move back to the seek state
+                FSM.MoveToState(FSM.seek);
+            }
+            // If we are close to our destination, select a new one
+            else if (Vector3.Distance(NPC.transform.position, destination) < 5)
+            {
+                SetDestination();
+            }
+            
+            // Re-set the timer
+            timeSinceStateEntered = 0f;
+        }
+
+        FireMainCannons();
+        //FireSecondaryCannons();
+
     }
 
     IEnumerator SeekStatusCheck()
@@ -63,11 +105,13 @@ public class MechWalkShootState : MechBaseState
             SetDestination();
         }
         // Otherwise, continue this state
-        FSM.StartCoroutine(SeekStatusCheck());
+        yield return SeekStatusCheck();
     }
 
     void FireMainCannons()
     {
+        isFiringMain = timeSinceMainGunsFired > 0;
+
         if (!isFiringMain) {
             if(mainLR)
             {
@@ -80,8 +124,11 @@ public class MechWalkShootState : MechBaseState
             mainLR = !mainLR;
             
             isFiringMain = true;
-            FSM.StartCoroutine(MainCooldown());
+            //FSM.StartCoroutine(MainCooldown());
+            timeSinceMainGunsFired = mainGunFiringRate;
         }
+
+        timeSinceMainGunsFired -= Time.fixedDeltaTime;
     }
 
     IEnumerator MainCooldown()

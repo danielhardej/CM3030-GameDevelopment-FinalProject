@@ -118,6 +118,8 @@ public class MechEnemyFSM : MonoBehaviour
 
     void Update()
     {
+        currentState.Update();
+
         DrawLine(BigCanon01L, 2.75f);
         DrawLine(BigCanon01R, 2.75f);
         DrawLine(BigCanon02L, 2.75f);
@@ -131,12 +133,18 @@ public class MechEnemyFSM : MonoBehaviour
 
     void FixedUpdate()
     {
-        isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
+        currentState.FixedUpdate();
 
-        if(isOnGround)
+        if(!agent.enabled)
         {
-            agent.enabled = true;
+            isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
+
+            if(isOnGround)
+            {
+                agent.enabled = true;
+            }
         }
+        
     }
 
     void LateUpdate()
@@ -238,6 +246,7 @@ public class MechEnemyFSM : MonoBehaviour
     //Big Canons
     public void ShootBigCanonA()
     {
+        Debug.Log("ShootBigCanonA");
         animator.SetTrigger("ShootBigCanonA");
         FireAtTarget(BigCanon01L.transform.position, AimingPoint, mainGunDamage);
         FireAtTarget(BigCanon01R.transform.position, AimingPoint, mainGunDamage);
@@ -250,20 +259,9 @@ public class MechEnemyFSM : MonoBehaviour
         BigCanon01L.material.SetColor("_TintColor", c);
         BigCanon01R.material.SetColor("_TintColor", c);
 
-        StartCoroutine("FadoutBigCanon01");
+        StartCoroutine(FadoutCanon(BigCanon01L, BigCanon01R));
     }
 
-    IEnumerator FadoutBigCanon01()
-    {
-        Color c = BigCanon01L.material.GetColor("_TintColor");
-        while (c.a > 0)
-        {
-            c.a -= 0.1f;
-            BigCanon01L.material.SetColor("_TintColor", c);
-            BigCanon01R.material.SetColor("_TintColor", c);
-            yield return null;
-        }
-    }
 
     public void ShootBigCanonB()
     {
@@ -278,19 +276,7 @@ public class MechEnemyFSM : MonoBehaviour
         c.a = 1f;
         BigCanon02L.material.SetColor("_TintColor", c);
         BigCanon02R.material.SetColor("_TintColor", c);
-        StartCoroutine("FadoutBigCanon02");
-    }
-
-    IEnumerator FadoutBigCanon02()
-    {
-        Color c = BigCanon02L.material.GetColor("_TintColor");
-        while (c.a > 0)
-        {
-            c.a -= 0.1f;
-            BigCanon02L.material.SetColor("_TintColor", c);
-            BigCanon02R.material.SetColor("_TintColor", c);
-            yield return null;
-        }
+        StartCoroutine(FadoutCanon(BigCanon02L, BigCanon02R));
     }
 
 
@@ -308,19 +294,7 @@ public class MechEnemyFSM : MonoBehaviour
         c.a = 1f;
         SmallCanon01L.material.SetColor("_TintColor", c);
         SmallCanon01R.material.SetColor("_TintColor", c);
-        StartCoroutine("FadoutSmallCanon01");
-    }
-
-    IEnumerator FadoutSmallCanon01()
-    {
-        Color c = SmallCanon01L.material.GetColor("_TintColor");
-        while (c.a > 0)
-        {
-            c.a -= 0.1f;
-            SmallCanon01L.material.SetColor("_TintColor", c);
-            SmallCanon01R.material.SetColor("_TintColor", c);
-            yield return null;
-        }
+        StartCoroutine(FadoutCanon(SmallCanon01L, SmallCanon01R));
     }
 
     public void ShootSmallCanonB()
@@ -336,17 +310,17 @@ public class MechEnemyFSM : MonoBehaviour
         c.a = 1f;
         SmallCanon02L.material.SetColor("_TintColor", c);
         SmallCanon02R.material.SetColor("_TintColor", c);
-        StartCoroutine("FadoutSmallCanon02");
+        StartCoroutine(FadoutCanon(SmallCanon02L, SmallCanon02R));
     }
 
-    IEnumerator FadoutSmallCanon02()
+    IEnumerator FadoutCanon(LineRenderer CanonL, LineRenderer CanonR)
     {
-        Color c = SmallCanon02L.material.GetColor("_TintColor");
+        Color c = CanonL.material.GetColor("_TintColor");
         while (c.a > 0)
         {
             c.a -= 0.1f;
-            SmallCanon02L.material.SetColor("_TintColor", c);
-            SmallCanon02R.material.SetColor("_TintColor", c);
+            CanonL.material.SetColor("_TintColor", c);
+            CanonR.material.SetColor("_TintColor", c);
             yield return null;
         }
     }

@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class MechSpawnState : MechBaseState
 {
-     public override void EnterState(MechEnemyFSM npc)
+    public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
-
-        FSM.StartCoroutine(CheckIsOnGround());
     }
 
-    IEnumerator CheckIsOnGround()
+    public override void FixedUpdate()
     {
-        while (!FSM.isOnGround)
+        if(FSM.isOnGround)
         {
-            yield return null;
+            FSM.MoveToState(FSM.seek);
         }
+    }
 
-        Debug.Log("Moving from spawn state");
-        //animator.SetBool("IsSleeping", false);
-        yield return new WaitForSeconds(1f);
-        FSM.MoveToState(FSM.seek);
-
+    public override void Update()
+    {
+        
     }
 }
