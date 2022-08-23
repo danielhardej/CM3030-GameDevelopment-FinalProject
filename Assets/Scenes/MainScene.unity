@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDelay: 0.5
-  maxEnemies: 1
+  maxEnemies: 3
   spawnType: 1
   spawnPoints:
   - {fileID: 220738153}
