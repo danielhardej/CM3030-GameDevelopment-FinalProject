@@ -39,7 +39,7 @@ public class HUDController : MonoBehaviour
             displayedScore -= 1;
         }
         
-        scoreLabel.SetText($"SCORE: {displayedScore}");
+        scoreLabel.SetText($"{displayedScore.ToString("n0")}");
     }
 
     public void SetScore(int value)
