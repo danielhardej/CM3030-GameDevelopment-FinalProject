@@ -11,9 +11,15 @@ public class MechSpawnState : MechBaseState
 
     public override void FixedUpdate()
     {
-        if(FSM.isOnGround)
+        if(!agent.enabled)
         {
-            FSM.MoveToState(FSM.seek);
+            var isOnGround = Physics.Raycast(FSM.transform.position + Vector3.up, Vector3.down, 1f);
+
+            if(isOnGround)
+            {
+                agent.enabled = true;
+                FSM.MoveToState(FSM.seek);
+            }
         }
     }
 

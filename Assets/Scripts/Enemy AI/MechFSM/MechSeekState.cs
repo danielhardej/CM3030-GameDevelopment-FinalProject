@@ -44,7 +44,7 @@ public class MechSeekState : MechBaseState
             // If we have line of sight with the player, then we begin shooting!
             if(HasLineOfSight())
             {
-                FSM.MoveToState(FSM.walkAndShoot);
+                FSM.MoveToState(FSM.shootState);
             }
             else // Otherwise, we continue moving toward the player
             {
@@ -57,5 +57,7 @@ public class MechSeekState : MechBaseState
     }
 
     public override void Update()
-    {}
+    {
+        Debug.DrawRay(new Vector3(NPC.transform.position.x, NPC.transform.position.y + sightHeightOffset, NPC.transform.position.z), GetDirectionToPlayer() * range, Color.green);
+    }
 }

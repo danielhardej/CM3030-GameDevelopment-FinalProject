@@ -107,15 +107,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 1.5
-    agentHeight: 3
+    agentRadius: 2
+    agentHeight: 6
     agentSlope: 35
     agentClimb: 0.8
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.5
+    cellSize: 0.6666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -208,7 +208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193070930}
-  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
+  m_LocalRotation: {x: -0.11917284, y: 0.87877566, z: -0.29318258, w: -0.35720468}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnDelay: 0.5
-  maxEnemies: 1
+  maxEnemies: 6
   spawnType: 1
   spawnPoints:
   - {fileID: 220738153}
@@ -1153,7 +1153,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156311183}
-  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
+  m_LocalRotation: {x: -0.11917284, y: 0.87877566, z: -0.29318258, w: -0.35720468}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1529,7 +1529,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1819,6 +1819,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rolling Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789970061039388018, guid: 18a82a3c95723b04dba2883c0da85866,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3789970061039388019, guid: 18a82a3c95723b04dba2883c0da85866,
         type: 3}

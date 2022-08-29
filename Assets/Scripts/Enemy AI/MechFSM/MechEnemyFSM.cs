@@ -27,6 +27,8 @@ public class MechEnemyFSM : MonoBehaviour
     public MechWalkShootState walkAndShoot = new MechWalkShootState();
     public MechSpawnState spawnState = new MechSpawnState();
 
+    public MechShootState shootState = new MechShootState();
+
     [Header("Animation")]
     public LineRenderer BigCanon01L;
     public LineRenderer BigCanon01R;
@@ -36,11 +38,20 @@ public class MechEnemyFSM : MonoBehaviour
     public LineRenderer SmallCanon01R;
     public LineRenderer SmallCanon02L;
     public LineRenderer SmallCanon02R;
+    public LineRenderer LazerSight;
+    public SpriteRenderer Reticle;
+    public ParticleSystem explosion;
+
+    public bool lockRotation;
+
     [HideInInspector]
     public Animator animator;
 
     [Header("Guns")]
     public GameObject AimingPoint;
+    
+    [SerializeField]
+    private Vector3 reticle;
     public float mainGunFiringRate;
     public float mainGunDamage;
     [HideInInspector]
@@ -89,8 +100,6 @@ public class MechEnemyFSM : MonoBehaviour
     [HideInInspector]
     public Transform body;
 
-    public bool isOnGround = false;
-
     #endregion
 
     // Start is called before the first frame update
@@ -111,7 +120,9 @@ public class MechEnemyFSM : MonoBehaviour
 
         body = transform.Find("Mech/Root/Pelvis/Body");
 
-        AimingPoint = GameObject.FindGameObjectsWithTag("Player").First().transform.Find("AimPoint").gameObject;
+        AimingPoint = player.transform.Find("AimPoint").gameObject;
+        reticle = AimingPoint.transform.position;
+        Reticle.enabled = false;
 
         MoveToState(spawnState);
     }
@@ -134,22 +145,14 @@ public class MechEnemyFSM : MonoBehaviour
     void FixedUpdate()
     {
         currentState.FixedUpdate();
-
-        if(!agent.enabled)
-        {
-            isOnGround = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
-
-            if(isOnGround)
-            {
-                agent.enabled = true;
-            }
-        }
-        
     }
 
     void LateUpdate()
     {
-        TurnToFaceTarget(player);
+        if(!lockRotation)
+        {
+            TurnToFaceTarget(player);
+        }
     }
 
     public void MoveToState(MechBaseState state)
@@ -190,7 +193,7 @@ public class MechEnemyFSM : MonoBehaviour
         Vector3 newDirection = Vector3.RotateTowards(body.forward, targetDirection, singleStep, 0.0f);
 
         // Draw a ray pointing at our target in
-        Debug.DrawRay(transform.position, newDirection* Vector3.Distance(transform.position, player.transform.position), Color.yellow);
+        //Debug.DrawRay(transform.position, newDirection* Vector3.Distance(transform.position, player.transform.position), Color.yellow);
 
         // Calculate a rotation a step closer to the target and applies rotation to this object
         Quaternion rotation = Quaternion.LookRotation(newDirection, transform.forward);
@@ -204,26 +207,30 @@ public class MechEnemyFSM : MonoBehaviour
     /// <summary>
     /// Method <c>DrawLine</c> Sets the positions of the linerenderer passed through to draw between the player and the guns.
     /// </summary>
-    private void DrawLine(LineRenderer lr, float forwardOffset = 0)
+    public void DrawLine(LineRenderer lr, float forwardOffset = 0)
     {
-        if(AimingPoint == null) return;
+        if(reticle == null) return;
 
         Vector3 offset = lr.transform.right * -forwardOffset;
 
         Vector3 start = lr.transform.position + offset;
         lr.SetPosition(0, start);
-        lr.SetPosition(1, AimingPoint.transform.position);
+        lr.SetPosition(1, reticle);
     }
 
     #region Cannon stuff
-    RaycastHit FireAtTarget(Vector3 from, GameObject target, float damage)
+    RaycastHit FireAtTarget(Vector3 from, Vector3 target, float damage)
     {
         if(target == null) return new RaycastHit();
+
+        //offset position slightly so that we arnt 100% accurate
+        var aimPoint = Random.insideUnitSphere + target;
+
         // Fire a raycast from the centre of the mech at the player to see if it hits.
-        Vector3 playerDirectionVector = (target.transform.position - from).normalized;
+        Vector3 playerDirectionVector = (aimPoint - from).normalized;
 
         // Draw a debug ray so we can see it
-        Debug.DrawRay(from, playerDirectionVector * Vector3.Distance(from, target.transform.position), Color.cyan);
+        Debug.DrawRay(from, playerDirectionVector * Vector3.Distance(from, aimPoint), Color.cyan);
 
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
@@ -235,8 +242,14 @@ public class MechEnemyFSM : MonoBehaviour
         //Checks if we hit something
         if (Physics.Raycast(from, playerDirectionVector, out RaycastHit hitInfo, range, layerMask))
         {
-            // If we did, apply necessary damage!
-            hitInfo.rigidbody.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+            if(hitInfo.rigidbody != null)
+            {
+                // If we did, apply necessary damage!
+                hitInfo.rigidbody.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
+            }
+
+            Instantiate(explosion, hitInfo.point, Quaternion.identity);
+            
         }
 
         // Return this information in case it's useful
@@ -244,12 +257,12 @@ public class MechEnemyFSM : MonoBehaviour
     }
 
     //Big Canons
-    public void ShootBigCanonA()
+    public void ShootBgCanonA()
     {
         Debug.Log("ShootBigCanonA");
         animator.SetTrigger("ShootBigCanonA");
-        FireAtTarget(BigCanon01L.transform.position, AimingPoint, mainGunDamage);
-        FireAtTarget(BigCanon01R.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(BigCanon01L.transform.position, reticle, mainGunDamage);
+        FireAtTarget(BigCanon01R.transform.position, reticle, mainGunDamage);
 
         audioSource.clip = audioBigCanon;
         audioSource.Play();
@@ -260,14 +273,15 @@ public class MechEnemyFSM : MonoBehaviour
         BigCanon01R.material.SetColor("_TintColor", c);
 
         StartCoroutine(FadoutCanon(BigCanon01L, BigCanon01R));
+        animator.ResetTrigger("ShootBigCanonA");
     }
 
 
-    public void ShootBigCanonB()
+    public void ShootBgCanonB()
     {
         animator.SetTrigger("ShootBigCanonB");
-        FireAtTarget(BigCanon02L.transform.position, AimingPoint, mainGunDamage);
-        FireAtTarget(BigCanon02R.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(BigCanon02L.transform.position, reticle, mainGunDamage);
+        FireAtTarget(BigCanon02R.transform.position, reticle, mainGunDamage);
 
         audioSource.clip = audioBigCanon;
         audioSource.Play();
@@ -277,15 +291,16 @@ public class MechEnemyFSM : MonoBehaviour
         BigCanon02L.material.SetColor("_TintColor", c);
         BigCanon02R.material.SetColor("_TintColor", c);
         StartCoroutine(FadoutCanon(BigCanon02L, BigCanon02R));
+        animator.ResetTrigger("ShootBigCanonB");
     }
 
 
     // Small Canons
-    public void ShootSmallCanonA()
+    public void ShootSmllCanonA()
     {
         animator.SetTrigger("ShootSmallCanonA");
-        FireAtTarget(SmallCanon01L.transform.position, AimingPoint, mainGunDamage);
-        FireAtTarget(SmallCanon01R.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(SmallCanon01L.transform.position, reticle, mainGunDamage);
+        FireAtTarget(SmallCanon01R.transform.position, reticle, mainGunDamage);
 
         audioSource.clip = audioSmallCanon;
         audioSource.Play();
@@ -295,13 +310,14 @@ public class MechEnemyFSM : MonoBehaviour
         SmallCanon01L.material.SetColor("_TintColor", c);
         SmallCanon01R.material.SetColor("_TintColor", c);
         StartCoroutine(FadoutCanon(SmallCanon01L, SmallCanon01R));
+        animator.ResetTrigger("ShootSmallCanonA");
     }
 
-    public void ShootSmallCanonB()
+    public void ShootSmllCanonB()
     {
         animator.SetTrigger("ShootSmallCanonB");
-        FireAtTarget(SmallCanon02L.transform.position, AimingPoint, mainGunDamage);
-        FireAtTarget(SmallCanon02R.transform.position, AimingPoint, mainGunDamage);
+        FireAtTarget(SmallCanon02L.transform.position, reticle, mainGunDamage);
+        FireAtTarget(SmallCanon02R.transform.position, reticle, mainGunDamage);
 
         audioSource.clip = audioSmallCanon;
         audioSource.Play();
@@ -311,6 +327,8 @@ public class MechEnemyFSM : MonoBehaviour
         SmallCanon02L.material.SetColor("_TintColor", c);
         SmallCanon02R.material.SetColor("_TintColor", c);
         StartCoroutine(FadoutCanon(SmallCanon02L, SmallCanon02R));
+        animator.ResetTrigger("ShootSmallCanonB");
+
     }
 
     IEnumerator FadoutCanon(LineRenderer CanonL, LineRenderer CanonR)
@@ -324,5 +342,13 @@ public class MechEnemyFSM : MonoBehaviour
             yield return null;
         }
     }
+
+    public void SetReticle(Vector3 point)
+    {
+        reticle = point;
+        //A hack to make sure the sprite always renderns "on the floor"
+        Reticle.gameObject.transform.position = new Vector3(reticle.x, 0.01f, reticle.z);
+    }
+
     #endregion
 }
