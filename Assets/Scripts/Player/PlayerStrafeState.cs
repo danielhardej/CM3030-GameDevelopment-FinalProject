@@ -26,10 +26,14 @@ public class PlayerStrafeState : PlayerState
     // Update is called once per frame
     public override void FixedUpdate()
     {
+        // Get the camera directional vector for use in controls
         Vector3 mainCameraRight = Camera.main.transform.right;
+        // Cancels out the y-vector, keeping the player on a 2d-plane
         mainCameraRight.y = 0;
+
         //var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
         var direction = _currentTrigger == STRAFE_LEFT ? mainCameraRight : mainCameraRight * (-1f);
+
         Debug.Log("Direction: " + direction);
 
         _stateMachine.transform.position += direction * _speed * Time.deltaTime;

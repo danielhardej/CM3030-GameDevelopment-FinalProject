@@ -25,6 +25,7 @@ public class PlayerRunState : PlayerState
     {
         base.FixedUpdate();
 
+        // Changes in order to facilitate cardinal diretions rather than player-oriented relational directions
         //var direction = (_stateMachine.forward * _acceleration) + _stateMachine.PlayerModel.transform.right * _strafe;
         var direction = (_stateMachine.forward * _acceleration) + Camera.main.transform.right * _strafe;
 

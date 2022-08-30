@@ -14,6 +14,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public float playerHealth;
 
+    // Changes needed in order to facilitate player control changes
     //public Vector3 forward => PlayerModel.transform.forward;
     public Vector3 forward;// => Camera.main.transform.forward;
 
@@ -28,10 +29,11 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState.Start(Vector2.zero);
 
+        // Set the camera-relative direction for movement
         Vector3 cardianlForward = Camera.main.transform.forward;
         cardianlForward.y = 0;
         forward = cardianlForward;
-        Debug.Log(forward);
+        //Debug.Log(forward);
     }
 
     // Update is called once per frame
