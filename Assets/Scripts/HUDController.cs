@@ -13,6 +13,7 @@ public class HUDController : MonoBehaviour
     private AudioSource backgroundMusic;
     private float backgroundMusicVolume;
     private TextMeshProUGUI scoreLabel;
+    private TextMeshProUGUI timeLable;
     private int score;
     private int displayedScore;
 
@@ -22,6 +23,8 @@ public class HUDController : MonoBehaviour
         scoreLabel = GetComponentInChildren<TextMeshProUGUI>();
         score = 0;
         displayedScore = 0;
+
+        timeLable = transform.Find("Canvas/TimeLabel").GetComponent<TextMeshProUGUI>(); 
 
         backgroundMusic = backgroundMusicObject?.GetComponent<AudioSource>();
         backgroundMusicVolume = backgroundMusic.volume;
@@ -40,6 +43,7 @@ public class HUDController : MonoBehaviour
         }
         
         scoreLabel.SetText($"{displayedScore.ToString("n0")}");
+        timeLable.SetText(GetFormattedTime());
     }
 
     public void SetScore(int value)
@@ -69,6 +73,15 @@ public class HUDController : MonoBehaviour
     {
         StartCoroutine(RestartingGame());
         Time.timeScale = 1;
+    }
+
+    private string GetFormattedTime()
+    {
+        int hours = Mathf.FloorToInt((Time.timeSinceLevelLoad / 60 / 60) % 60);
+        int minutes = Mathf.FloorToInt((Time.timeSinceLevelLoad / 60) % 60);
+        int seconds = Mathf.FloorToInt(Time.timeSinceLevelLoad % 60);
+
+        return $"{hours:00} : {minutes:00} : {seconds:00}";
     }
 
     private IEnumerator RestartingGame()

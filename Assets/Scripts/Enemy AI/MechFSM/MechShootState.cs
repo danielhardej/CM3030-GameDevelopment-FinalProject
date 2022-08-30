@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class MechShootState : MechBaseState
 {
@@ -31,10 +32,9 @@ public class MechShootState : MechBaseState
         spriteCurrentScale = 1.0f;
         spriteCurrentAlpha = 0.01f;
 
-        agent.enabled = false;
+        agent.isStopped = true;
 
         FSM.lockRotation = true;
-        //FSM.LazerSight.enabled = true;
         FSM.Reticle.enabled = true;
     }
 
@@ -67,19 +67,28 @@ public class MechShootState : MechBaseState
 
     public override void Update()
     {
-        //FSM.DrawLine(FSM.LazerSight);
+        //Start scaling the size of the reticle from huge to normal
         var scaleDelta = Mathf.MoveTowards(spriteCurrentScale, spriteTargetScale, totalTimeInState);
         FSM.Reticle.transform.localScale = new Vector3(scaleDelta, scaleDelta, scaleDelta);
+
+        //Fade the alpha of the colour in over time.
         var colour = FSM.Reticle.material.color;
         colour.a = Mathf.MoveTowards(spriteCurrentAlpha, 1.0f, totalTimeInState);
+        
         FSM.Reticle.material.color = colour;
     }
 
     private void MoveToSeekState()
     {
+        Assert.IsTrue(FSM.transform.position.y >= 0);
+
+        //Reset state of animation and nav agent
         FSM.animator.SetBool("isWalking", true);
-        agent.enabled = true;
+        agent.isStopped = false;
+
         FSM.MoveToState(FSM.seek);
+
+        //reset the rest of the state after the transition.
         totalTimeInState = 0f;
         FSM.lockRotation = false;
         FSM.LazerSight.enabled = false;
