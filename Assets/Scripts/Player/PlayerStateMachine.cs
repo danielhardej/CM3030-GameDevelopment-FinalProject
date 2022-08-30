@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -13,8 +14,12 @@ public class PlayerStateMachine : MonoBehaviour
     public GameObject PlayerModel;
 
     public float playerHealth;
+    public float originalHealth;
     
     public Vector3 forward => PlayerModel.transform.forward;
+
+    private List<Material> modelMaterials;
+    private float pulseSpeed = 0f;
 
     void Start()
     {
@@ -27,6 +32,9 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState.Start(Vector2.zero);
 
+        originalHealth = playerHealth;
+
+        modelMaterials = (PlayerModel.GetComponentsInChildren<SkinnedMeshRenderer>()).Select(x => x.material).ToList();
     }
 
     // Update is called once per frame
@@ -59,7 +67,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void OnMove(InputValue input)
     {
-        Debug.Log("OnMove Called");
 
         Vector2 inputVec = input.Get<Vector2>();
 
@@ -71,13 +78,31 @@ public class PlayerStateMachine : MonoBehaviour
     /// </summary>
     public void ApplyDamage(float damage)
     {
-        playerHealth -= damage;
-
-        //Debug.Log("Hit! Took: " + damage + " damage. " + playerHealth + " health remaining");
-
-        //if (health <= 0)
-        //{
-        //    gameObject.SetActive(false);
-        //}
+        UpdateHealth(-damage);
     }
+
+    private void UpdateHealth(float amount)
+    {
+        playerHealth += amount;
+
+        var healthPercentage = playerHealth / originalHealth;
+
+        GameController.Instance.UpdatePlayerHealth(healthPercentage);
+
+        pulseSpeed = Mathf.MoveTowards(pulseSpeed, 30f, healthPercentage);
+
+        UpdateMatarial(Color.Lerp(Color.red, Color.yellow, healthPercentage), 0.8f,pulseSpeed);
+
+    }
+
+    private void UpdateMatarial(Color color, float amount, float speed)
+    {
+        foreach (var mat in modelMaterials)
+        {
+            mat.SetColor("FresnelColour", color);
+            mat.SetFloat("FresnelAmount", amount);
+            mat.SetFloat("Speed_", speed);
+        }
+    }
+
 }

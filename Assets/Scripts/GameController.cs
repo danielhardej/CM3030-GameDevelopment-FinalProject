@@ -25,6 +25,19 @@ public class GameController : MonoBehaviour
         HUDController?.SendMessage("SetScore", score * scoreModifier);
     }
 
+    public void UpdatePlayerHealth(float value)
+    {
+        if(value > 0 && value <= 1)
+        {
+            HUDController?.SendMessage("SetHealth", value);
+        }
+
+        if(value < 0)
+        {
+            //TODO: ENDGAME
+        }
+    }
+
     void Awake()
     {
         Instance = this;
