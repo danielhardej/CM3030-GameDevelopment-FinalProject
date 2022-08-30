@@ -25,12 +25,13 @@ public class PlayerRunState : PlayerState
     {
         base.FixedUpdate();
 
-        var direction = (_stateMachine.forward * _acceleration) + _stateMachine.PlayerModel.transform.right * _strafe;
+        //var direction = (_stateMachine.forward * _acceleration) + _stateMachine.PlayerModel.transform.right * _strafe;
+        var direction = (_stateMachine.forward * _acceleration) + Camera.main.transform.right * _strafe;
 
         _stateMachine.transform.position += direction * Time.deltaTime;
     }
 
-    //input represents a the two input axis the x component is vertical and the y component horizontal.
+    //input represents the two input axis the x component is vertical and the y component horizontal.
     //we use horizontal for back and forth and vertical for rotation.
     public override void Move(Vector2 input)
     {
@@ -54,7 +55,7 @@ public class PlayerRunState : PlayerState
     private void CalculateMovementAndRotation(Vector2 input)
     {
         _acceleration = input.y * _speed;
-        _strafe = (float)Math.Round(input.x)  * _speed/2 * (-1f);
+        _strafe = (float)Math.Round(input.x)  * _speed/2;
     }
 
 }

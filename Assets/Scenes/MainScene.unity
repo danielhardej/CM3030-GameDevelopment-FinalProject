@@ -360,7 +360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193070930}
-  m_LocalRotation: {x: -0.11917285, y: 0.87877566, z: -0.29318258, w: -0.3572047}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1536,7 +1536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &740980488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,7 +2428,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156311183}
-  m_LocalRotation: {x: -0.11917285, y: 0.87877566, z: -0.29318258, w: -0.3572047}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4058,6 +4058,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rolling Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789970061039388018, guid: 18a82a3c95723b04dba2883c0da85866,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3789970061039388019, guid: 18a82a3c95723b04dba2883c0da85866,
         type: 3}

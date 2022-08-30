@@ -26,7 +26,11 @@ public class PlayerStrafeState : PlayerState
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
+        Vector3 mainCameraRight = Camera.main.transform.right;
+        mainCameraRight.y = 0;
+        //var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
+        var direction = _currentTrigger == STRAFE_LEFT ? mainCameraRight : mainCameraRight * (-1f);
+        Debug.Log("Direction: " + direction);
 
         _stateMachine.transform.position += direction * _speed * Time.deltaTime;
         Debug.DrawLine(_stateMachine.transform.position, _stateMachine.transform.position + direction * _speed);

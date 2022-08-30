@@ -13,8 +13,9 @@ public class PlayerStateMachine : MonoBehaviour
     public GameObject PlayerModel;
 
     public float playerHealth;
-    
-    public Vector3 forward => PlayerModel.transform.forward;
+
+    //public Vector3 forward => PlayerModel.transform.forward;
+    public Vector3 forward;// => Camera.main.transform.forward;
 
     void Start()
     {
@@ -27,6 +28,10 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentState.Start(Vector2.zero);
 
+        Vector3 cardianlForward = Camera.main.transform.forward;
+        cardianlForward.y = 0;
+        forward = cardianlForward;
+        Debug.Log(forward);
     }
 
     // Update is called once per frame
