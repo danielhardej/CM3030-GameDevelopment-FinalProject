@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: da2b6947cf5296246b1cf60ab14ef35c,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -360,7 +360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193070930}
-  m_LocalRotation: {x: -0.11917287, y: 0.87877566, z: -0.29318255, w: -0.35720474}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 422433634}
   - component: {fileID: 422433633}
   m_Layer: 5
-  m_Name: HealthLabel (1)
+  m_Name: TimeLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2428,7 +2428,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156311183}
-  m_LocalRotation: {x: -0.11917287, y: 0.87877566, z: -0.29318255, w: -0.35720474}
+  m_LocalRotation: {x: -0.119172856, y: 0.87877566, z: -0.29318258, w: -0.35720474}
   m_LocalPosition: {x: 14.44, y: 63.49, z: -451.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

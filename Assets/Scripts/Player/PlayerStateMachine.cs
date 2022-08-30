@@ -9,6 +9,11 @@ public class PlayerStateMachine : MonoBehaviour
 {
     PlayerState _currentState;
 
+    public static string PLAYER_IDLE_STATE = nameof(PlayerIdleState);
+    public static string PLAYER_RUN_STATE = nameof(PlayerRunState);
+    public static string PLAYER_STRAFE_STATE = nameof(PlayerStrafeState);
+    public static string PLAYER_DEATH_STATE = nameof(PlayerDeathState);
+
     public Dictionary<string, PlayerState> _states;
 
     public GameObject PlayerModel;
@@ -24,11 +29,12 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _states = new Dictionary<string, PlayerState>();
-        _states.Add(nameof(PlayerIdleState), new PlayerIdleState(this));
-        _states.Add(nameof(PlayerRunState), new PlayerRunState(this));
-        _states.Add(nameof(PlayerStrafeState), new PlayerStrafeState(this));
+        _states.Add(PLAYER_IDLE_STATE, new PlayerIdleState(this));
+        _states.Add(PLAYER_RUN_STATE, new PlayerRunState(this));
+        _states.Add(PLAYER_STRAFE_STATE, new PlayerStrafeState(this));
+        _states.Add(PLAYER_DEATH_STATE, new PlayerDeathState(this));
 
-        _currentState = _states[nameof(PlayerIdleState)];
+        _currentState = _states[PLAYER_IDLE_STATE];
 
         _currentState.Start(Vector2.zero);
 
@@ -55,14 +61,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ChangeState(string stateName, Vector2 input) 
     {
-        _currentState.End();
-
-        if (_states.ContainsKey(stateName))
+        if (_states.ContainsKey(stateName) && _currentState != _states[stateName])
         {
+            _currentState.End();
             _currentState = _states[stateName];
             _currentState.Start(input);
         }
-        
     }
 
     public void OnMove(InputValue input)
@@ -84,6 +88,11 @@ public class PlayerStateMachine : MonoBehaviour
     private void UpdateHealth(float amount)
     {
         playerHealth += amount;
+
+        if(playerHealth <= 0)
+        {
+            ChangeState(PLAYER_DEATH_STATE, Vector2.zero);
+        }
 
         var healthPercentage = playerHealth / originalHealth;
 

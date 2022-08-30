@@ -38,7 +38,7 @@ public class PlayerRunState : PlayerState
 
         if(input.sqrMagnitude == 0f)
         {
-            _stateMachine.ChangeState(nameof(PlayerIdleState), input);
+            _stateMachine.ChangeState(PlayerStateMachine.PLAYER_IDLE_STATE, input);
             return;
         }
 
