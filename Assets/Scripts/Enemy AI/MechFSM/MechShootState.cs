@@ -31,14 +31,11 @@ public class MechShootState : MechBaseState
         spriteCurrentScale = 1.0f;
         spriteCurrentAlpha = 0.01f;
 
-
         agent.enabled = false;
 
         FSM.lockRotation = true;
         //FSM.LazerSight.enabled = true;
         FSM.Reticle.enabled = true;
-        
-
     }
 
     public override void FixedUpdate()

@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerModel: {fileID: 3365620915910544308}
+  playerHealth: 0
 --- !u!114 &120866063208587640
 MonoBehaviour:
   m_ObjectHideFlags: 0
