@@ -23,6 +23,7 @@ using UnityEngine;
 /// </summary>
 public class MechSeekState : MechBaseState
 {
+    float timeSinceStateEntered;
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
@@ -30,34 +31,33 @@ public class MechSeekState : MechBaseState
         // Triggers the start of the walking animation
         animator.SetBool("isWalking", true);
 
-        /*
-         * Coroutines must be called from a MonoBehaviour class. Since this is not a monobehaviour,
-         * we must instead call the coroutine in this code, but get the MonoBehviour script to run it for us.
-         * 
-         * Here we are getting the FSM MonoBehaviour to begin this coroutine.
-         */
-        FSM.StartCoroutine(SeekStatusCheck());
+        timeSinceStateEntered = 0f;
     }
 
-    IEnumerator SeekStatusCheck()
+    public override void FixedUpdate()
     {
+        timeSinceStateEntered += Time.fixedDeltaTime;
+
         // Waits the prescribed amount of time
-        yield return new WaitForSeconds(targetPositionUpdateTime);
-
-        // If we have line of sight with the player, then we begin shooting!
-        if(HasLineOfSight())
+        if(timeSinceStateEntered > targetPositionUpdateTime)
         {
-            FSM.MoveToState(FSM.walkAndShoot);
+            // If we have line of sight with the player, then we begin shooting!
+            if(HasLineOfSight())
+            {
+                FSM.MoveToState(FSM.shootState);
+            }
+            else // Otherwise, we continue moving toward the player
+            {
+                destination = player.transform.position;
+                agent.SetDestination(destination);
+            }
+            // Re-set the timer
+            timeSinceStateEntered = 0f;
         }
-        // Otherwise, we continue moving toward the player
-        else
-        {
-            //Debug.Log("Setting target to:" + player.transform.position);
-            destination = player.transform.position;
-            agent.destination = destination;
+    }
 
-            // Re-run the coroutine
-            FSM.StartCoroutine(SeekStatusCheck());
-        }
+    public override void Update()
+    {
+        Debug.DrawRay(new Vector3(NPC.transform.position.x, NPC.transform.position.y + sightHeightOffset, NPC.transform.position.z), GetDirectionToPlayer() * range, Color.green);
     }
 }

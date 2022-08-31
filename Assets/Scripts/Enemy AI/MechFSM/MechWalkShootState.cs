@@ -23,9 +23,32 @@ using UnityEngine.AI;
 /// </summary>
 public class MechWalkShootState : MechBaseState
 {
+    float timeSinceStateEntered;
+    float timeSinceMainGunsFired;
+    float timeSinceSecondaryGunsFired;
+    Queue<Vector3> playerPositions;
+
+    Vector3 currentReticle;
+
     public override void EnterState(MechEnemyFSM npc)
     {
         base.EnterState(npc);
+
+        timeSinceStateEntered = 0f;
+        timeSinceMainGunsFired = mainGunFiringRate;
+        timeSinceSecondaryGunsFired = secondaryGunFiringRate;
+
+        FSM.LazerSight.enabled = true;
+        FSM.Reticle.enabled = true;
+
+        playerPositions = new Queue<Vector3>();
+
+        for (int i = 0; i < Mathf.FloorToInt(0.5f/Time.fixedDeltaTime); i++)
+        {
+            playerPositions.Enqueue(FSM.AimingPoint.transform.position);
+        }
+
+        currentReticle = playerPositions.Dequeue();
 
         // Set a new destination for the navmeshagent
         SetDestination();
@@ -36,7 +59,64 @@ public class MechWalkShootState : MechBaseState
          * 
          * Here we are getting the FSM MonoBehaviour to begin this coroutine.
          */
-        FSM.StartCoroutine(SeekStatusCheck());
+        //FSM.StartCoroutine(SeekStatusCheck());
+    }
+
+    public override void Update()
+    {
+        FSM.DrawLine(FSM.LazerSight);
+
+        Debug.DrawRay(new Vector3(NPC.transform.position.x, NPC.transform.position.y + sightHeightOffset, NPC.transform.position.z), GetDirectionToPlayer() * range, Color.yellow);
+    }
+
+    public override void FixedUpdate()
+    {
+        timeSinceStateEntered += Time.fixedDeltaTime;
+
+        var historicalPlayerPos = playerPositions.Dequeue();
+
+        var playerPositionDistance = Vector3.Distance(historicalPlayerPos, FSM.body.position);
+
+        var activeTargetPosition = FSM.body.position + FSM.body.forward * playerPositionDistance;
+
+        activeTargetPosition.y = historicalPlayerPos.y;
+
+        // Waits the prescribed amount of time
+        if(timeSinceStateEntered > targetPositionUpdateTime)
+        {
+            // If we have lost line of sight with the player, go back to seeking.
+            if (Vector3.Distance(activeTargetPosition, NPC.transform.position) > range)
+            {
+                // Move back to the seek state
+                FSM.MoveToState(FSM.seek);
+                FSM.LazerSight.enabled = false;
+                FSM.Reticle.enabled = false;
+                playerPositions.Clear();
+            }
+            // If we are close to our destination, select a new one
+            else if (Vector3.Distance(activeTargetPosition, destination) < 5)
+            {
+                SetDestination();
+            }
+            
+            // Re-set the timer
+            timeSinceStateEntered = 0f;
+        }
+
+        //FireMainCannons();
+        //FireSecondaryCannons();
+
+        //update the players position
+        if(playerPositions.Count == 0)
+        {
+            playerPositions.Enqueue(FSM.AimingPoint.transform.position);
+            playerPositions.Enqueue(FSM.AimingPoint.transform.position);    
+        }
+
+        playerPositions.Enqueue(FSM.AimingPoint.transform.position);
+
+        FSM.SetReticle(activeTargetPosition);
+
     }
 
     IEnumerator SeekStatusCheck()
@@ -63,25 +143,30 @@ public class MechWalkShootState : MechBaseState
             SetDestination();
         }
         // Otherwise, continue this state
-        FSM.StartCoroutine(SeekStatusCheck());
+        yield return SeekStatusCheck();
     }
 
     void FireMainCannons()
     {
+        //isFiringMain = timeSinceMainGunsFired > 0;
+
         if (!isFiringMain) {
             if(mainLR)
             {
-                FSM.ShootBigCanonA();
+                FSM.ShootBgCanonA();
             }
             else
             {
-                FSM.ShootBigCanonB();
+                FSM.ShootBgCanonB();
             }
             mainLR = !mainLR;
             
             isFiringMain = true;
             FSM.StartCoroutine(MainCooldown());
+            timeSinceMainGunsFired = mainGunFiringRate;
         }
+
+        timeSinceMainGunsFired -= Time.fixedDeltaTime;
     }
 
     IEnumerator MainCooldown()
@@ -98,11 +183,11 @@ public class MechWalkShootState : MechBaseState
         {
             if (secondLR)
             {
-                FSM.ShootSmallCanonA();
+                FSM.ShootSmllCanonA();
             }
             else
             {
-                FSM.ShootSmallCanonB();
+                FSM.ShootSmllCanonB();
             }
             secondLR = !secondLR;
 
@@ -140,7 +225,7 @@ public class MechWalkShootState : MechBaseState
     /// </summary>
     private void SetDestination()
     {
-        Vector3 newDestination = GetRandomLocation(player.transform.position, preferredRange);
+        Vector3 newDestination = GetRandomLocation(playerPositions.Peek(), preferredRange);
 
         destination = newDestination;
         agent.SetDestination(destination);

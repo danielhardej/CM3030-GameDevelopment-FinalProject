@@ -155,7 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b44efa8288e5c4e9a1212ffa82c030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 25
   initialVelocity: 3000
   rigidbody: {fileID: 3957456611240435571}
-  explosion: {fileID: 892667361387821087, guid: d4f603b0d8da71e4ebdb986ee5ce4708,
+  explosion: {fileID: 8549868895657338831, guid: 50a0dbd00322c0f4581e6dff671a0d8e,
     type: 3}

@@ -13,8 +13,11 @@ public class HUDController : MonoBehaviour
     private AudioSource backgroundMusic;
     private float backgroundMusicVolume;
     private TextMeshProUGUI scoreLabel;
+    private TextMeshProUGUI timeLabel;
+    private TextMeshProUGUI healthLabel;
     private int score;
     private int displayedScore;
+    private float displayHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,11 @@ public class HUDController : MonoBehaviour
         scoreLabel = GetComponentInChildren<TextMeshProUGUI>();
         score = 0;
         displayedScore = 0;
+
+        displayHealth = 1f;
+
+        timeLabel = transform.Find("Canvas/TimeLabel").GetComponent<TextMeshProUGUI>();
+        healthLabel = transform.Find("Canvas/HealthLabel").GetComponent<TextMeshProUGUI>(); 
 
         backgroundMusic = backgroundMusicObject?.GetComponent<AudioSource>();
         backgroundMusicVolume = backgroundMusic.volume;
@@ -40,11 +48,19 @@ public class HUDController : MonoBehaviour
         }
         
         scoreLabel.SetText($"{displayedScore.ToString("n0")}");
+        timeLabel.SetText(GetFormattedTime());
+        healthLabel.SetText($"{displayHealth:P0}");
+
     }
 
     public void SetScore(int value)
     {
         score = value;
+    }
+
+    public void SetHealth(float value)
+    {
+        displayHealth = value;
     }
 
     public void OnPauseGame()
@@ -69,6 +85,15 @@ public class HUDController : MonoBehaviour
     {
         StartCoroutine(RestartingGame());
         Time.timeScale = 1;
+    }
+
+    private string GetFormattedTime()
+    {
+        int hours = Mathf.FloorToInt((Time.timeSinceLevelLoad / 60 / 60) % 60);
+        int minutes = Mathf.FloorToInt((Time.timeSinceLevelLoad / 60) % 60);
+        int seconds = Mathf.FloorToInt(Time.timeSinceLevelLoad % 60);
+
+        return $"{hours:00} : {minutes:00} : {seconds:00}";
     }
 
     private IEnumerator RestartingGame()
