@@ -11,6 +11,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
@@ -21,6 +22,8 @@ public class EnemySpawnManager : MonoBehaviour
     float spawnDelay;
     [SerializeField, Tooltip("Maximum number of enemy instances allowed at the same time")]
     int maxEnemies;
+    [SerializeField, Tooltip("Percentage chance that a spawn will result in a boss spawning"), Range(0, 100)]
+    int bossSpawnPercentage;
     [SerializeField, Tooltip("How should enemies be spawned?")]
     SpawnType spawnType;
 
@@ -29,12 +32,10 @@ public class EnemySpawnManager : MonoBehaviour
     List<GameObject> spawnPoints;
 
     [Header("Enemies")]
-    // I left this in with the idea of adding more enemy types in the future, however,
-    // for the sake of simplicity we will just use one for now
-    //[SerializeField, Tooltip("Enemy prefabs to spawn")]
-    //List<GameObject> enemies;
-    [SerializeField, Tooltip("Enemy prefab to spawn")]
-    GameObject enemy;
+    [SerializeField, Tooltip("Enemy prefabs to spawn")]
+    List<GameObject> enemies;
+    [SerializeField, Tooltip("Enemy boss prefabs to spawn")]
+    List<GameObject> bosses;
     [SerializeField, ReadOnly, Tooltip("List of enemies spawned by this spawner")]
     List<GameObject> spawnedEntities;
 
@@ -114,12 +115,12 @@ public class EnemySpawnManager : MonoBehaviour
                 int randomIndex = Random.Range(0, spawnPoints.Count);
 
                 // Spawn enemy
-                SpawnEntity(enemy, spawnPoints[randomIndex].transform.position, spawnPoints[randomIndex].transform.rotation);
+                SpawnEntity(RandomEnemy(), spawnPoints[randomIndex].transform.position, spawnPoints[randomIndex].transform.rotation);
             }
             else if (spawnType == SpawnType.Distributed)
             {
                 // Spawn enemy at the current spawner in sequence
-                SpawnEntity(enemy, spawnPoints[spawnerSequence].transform.position, spawnPoints[spawnerSequence].transform.rotation);
+                SpawnEntity(RandomEnemy(), spawnPoints[spawnerSequence].transform.position, spawnPoints[spawnerSequence].transform.rotation);
 
                 // Increment to the next spawner
                 spawnerSequence++;
@@ -155,5 +156,41 @@ public class EnemySpawnManager : MonoBehaviour
         // Add the newly spawned entity to our list of spawned entities,
         // so we can keep track of the number that have spawned.
         spawnedEntities.Add(spawnedEntity);
+    }
+
+    /// <summary>
+    /// Method <c>RandomEnemy</c> selects a random enemy from the list of enemies to spawn.
+    /// </summary>
+    GameObject RandomEnemy()
+    {
+        // Select a random int value between 0 (inc) and 99 (inc)
+        // This is to determine whether a boss spawns or not
+        float bossSpawn = Random.Range(0, 100);
+
+        int numberOfEnemies = enemies.Count;
+        int numberOfBosses = bosses.Count;
+
+        GameObject Enemy;
+
+        // If there are boss enemy prefabs AND we randomly chose to spawn a boss
+        // spawn a boss
+        if (bossSpawn < bossSpawnPercentage && numberOfBosses > 0)
+        {
+            // Generate a random, valid, index
+            int randomIndex = Random.Range(0, numberOfBosses);
+            // Pull randomly selected enemy out of list
+            Enemy = bosses[randomIndex];
+        }
+        // Otherwise, spawn regular
+        else
+        {
+            // Generate a random, valid, index
+            int randomIndex = Random.Range(0, numberOfEnemies);
+            // Pull randomly selected enemy out of list
+            Enemy = enemies[randomIndex];
+        }
+
+        // Return our randomly selected enemy
+        return Enemy;
     }
 }
