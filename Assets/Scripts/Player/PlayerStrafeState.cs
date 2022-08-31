@@ -9,7 +9,7 @@ public class PlayerStrafeState : PlayerState
 
     private string _currentTrigger;
 
-    float _speed = 5.0f;
+    float _speed = 10.0f;
 
     public PlayerStrafeState(PlayerStateMachine stateMachine): base(stateMachine)
     {}
