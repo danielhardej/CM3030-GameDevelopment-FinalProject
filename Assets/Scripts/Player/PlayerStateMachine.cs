@@ -20,8 +20,10 @@ public class PlayerStateMachine : MonoBehaviour
 
     public float playerHealth;
     public float originalHealth;
-    
-    public Vector3 forward => PlayerModel.transform.forward;
+
+    // Changes needed in order to facilitate player control changes
+    //public Vector3 forward => PlayerModel.transform.forward;
+    public Vector3 forward;// => Camera.main.transform.forward;
 
     private List<Material> modelMaterials;
     private float pulseSpeed = 0f;
@@ -41,6 +43,12 @@ public class PlayerStateMachine : MonoBehaviour
         originalHealth = playerHealth;
 
         modelMaterials = (PlayerModel.GetComponentsInChildren<SkinnedMeshRenderer>()).Select(x => x.material).ToList();
+
+        // Set the camera-relative direction for movement
+        Vector3 cardianlForward = Camera.main.transform.forward;
+        cardianlForward.y = 0;
+        forward = cardianlForward;
+        //Debug.Log(forward);
     }
 
     // Update is called once per frame
