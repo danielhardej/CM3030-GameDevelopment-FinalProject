@@ -3054,7 +3054,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4072,6 +4072,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rolling Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3789970061039388018, guid: 18a82a3c95723b04dba2883c0da85866,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3789970061039388019, guid: 18a82a3c95723b04dba2883c0da85866,
         type: 3}
