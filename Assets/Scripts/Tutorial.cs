@@ -10,18 +10,32 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using System.Linq;
-
+using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
     [SerializeField] private Image _img;
     [SerializeField] private Sprite _pressed, _default;
 
+    public GameObject Quest1;
+    public GameObject Quest2;
+    public GameObject Quest3;
+    public GameObject Quest4;
+
+    public Slider progressSlider;
+
+    public TextMeshProUGUI progressLabel;
+
     public bool isActive = false;
     public bool isComplete = false;
 
     void Start()
     {
+        Quest1.SetActive(true);
+        Quest2.SetActive(false);
+        Quest3.SetActive(false);
+        Quest4.SetActive(false);
+
         InputSystem.onEvent.ForDevice<Keyboard>()
             .Where(e => e.type == new FourCC('S', 'T', 'A', 'T'))
             .Call(act =>
@@ -30,29 +44,23 @@ public class Tutorial : MonoBehaviour
 
                 if (button != null)
                 {
-                    if (button.displayName == "Up" || button.displayName == "W")
+                    if (button.displayName == "Up" || button.displayName == "W" ||
+                        button.displayName == "Down" || button.displayName == "S"||
+                        button.displayName == "Left" || button.displayName == "A" ||
+                        button.displayName == "Right" || button.displayName == "D")
                     {
-                        Debug.Log("Up Pressed");
-                    }
-
-                    if (button.displayName == "Down" || button.displayName == "S")
-                    {
-                        Debug.Log("Down Pressed");
-                    }
-
-                    if (button.displayName == "Left" || button.displayName == "A")
-                    {
-                        Debug.Log("Left Pressed");
-                    }
-
-                    if (button.displayName == "Right" || button.displayName == "D")
-                    {
-                        Debug.Log("Right Pressed");
+                        if(Quest1.activeInHierarchy == true)
+                        {
+                            ActivateAndDeactivateQuests(Quest1, Quest2, 0.25f);
+                        }
                     }
 
                     if (button.displayName == "Space")
                     {
-                        Debug.Log("Space Pressed");
+                        if(Quest3.activeInHierarchy)
+                        {
+                            ActivateAndDeactivateQuests(Quest3, Quest4, 0.75f);
+                        }
                     }
 
                     if (button.displayName == "Esc")
@@ -72,11 +80,29 @@ public class Tutorial : MonoBehaviour
                 {
                     if (button.displayName == "Left Button")
                     {
-                        Debug.Log("Mouse Clicked");
+                        if(Quest3.activeInHierarchy)
+                        {
+                            ActivateAndDeactivateQuests(Quest3, Quest4, 0.75f);
+                        }
+                    }
+                }
+                else
+                {
+                    if(Quest2.activeInHierarchy)
+                    {
+                        ActivateAndDeactivateQuests(Quest2, Quest3, 0.5f);
                     }
                 }
 
             });
+    }
+
+    private void ActivateAndDeactivateQuests(GameObject firstQuest, GameObject secondQuest, float progress)
+    {
+        firstQuest.SetActive(false);
+        secondQuest.SetActive(true);
+        progressSlider.SetValueWithoutNotify(progress);
+        progressLabel.SetText($"{progress:P0}");
     }
 
 }

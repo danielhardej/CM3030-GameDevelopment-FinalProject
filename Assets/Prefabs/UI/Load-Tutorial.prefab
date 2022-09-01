@@ -159,6 +159,12 @@ MonoBehaviour:
   _img: {fileID: 4685297451403098562}
   _pressed: {fileID: 0}
   _default: {fileID: 0}
+  Quest1: {fileID: 3702721104095863691}
+  Quest2: {fileID: 8536859803224846502}
+  Quest3: {fileID: 5085145365385361002}
+  Quest4: {fileID: 7230003601965542609}
+  progressSlider: {fileID: 2222233541696025578}
+  progressLabel: {fileID: 5335682570378382044}
   isActive: 0
   isComplete: 0
 --- !u!1 &21709055561232396
@@ -1267,7 +1273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6891647027375312266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2446,7 +2452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6269971040248440641
 RectTransform:
   m_ObjectHideFlags: 0
