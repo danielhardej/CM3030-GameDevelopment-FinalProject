@@ -27,6 +27,8 @@ public class EnemyFSM : MonoBehaviour
     [Header("NPC Settings")]
     [Tooltip("Maximum health")]
     public float health;
+    [Tooltip("Score rewarded upon being killed")]
+    public int scoreOnDeath;
 
     [Header("Movement")]
     [Tooltip("The speed that the agent moves. This is identical to changing the speed in the navmesh agent")]
@@ -124,7 +126,7 @@ public class EnemyFSM : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         health -= damage;
-        GameController.Instance.IncreaseScore(10);
+        GameController.Instance.IncreaseScore(scoreOnDeath);
 
         if (health <= 0)
         {

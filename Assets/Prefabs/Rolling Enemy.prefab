@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  scoreOnDeath: 500
   seekSpeed: 8
   updateTime: 2
   waitTime: 5
@@ -156,6 +157,7 @@ MonoBehaviour:
   player: {fileID: 0}
   NPCgO: {fileID: 0}
   hit_player: 0
+  isOnGround: 0
 --- !u!1 &7007926551797142289
 GameObject:
   m_ObjectHideFlags: 0

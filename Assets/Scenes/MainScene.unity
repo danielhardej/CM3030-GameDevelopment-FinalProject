@@ -3783,7 +3783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUDController: {fileID: 451843747}
   score: 0
-  scoreModifier: 100
+  scoreModifier: 1
 --- !u!1 &1752637430
 GameObject:
   m_ObjectHideFlags: 0
