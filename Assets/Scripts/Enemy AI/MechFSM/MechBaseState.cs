@@ -75,6 +75,10 @@ public abstract class MechBaseState
         FSM = npc;
     }
 
+    public abstract void Update();
+
+    public abstract void FixedUpdate();
+
     /// <summary>
     /// Method <c>GetDistanceToPlayer</c> Returns the distance from this npc to the player character.
     /// </summary>

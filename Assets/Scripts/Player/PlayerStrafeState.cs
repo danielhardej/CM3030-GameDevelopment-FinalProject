@@ -9,7 +9,7 @@ public class PlayerStrafeState : PlayerState
 
     private string _currentTrigger;
 
-    float _speed = 5.0f;
+    float _speed = 10.0f;
 
     public PlayerStrafeState(PlayerStateMachine stateMachine): base(stateMachine)
     {}
@@ -26,7 +26,15 @@ public class PlayerStrafeState : PlayerState
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
+        // Get the camera directional vector for use in controls
+        Vector3 mainCameraRight = Camera.main.transform.right;
+        // Cancels out the y-vector, keeping the player on a 2d-plane
+        mainCameraRight.y = 0;
+
+        //var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
+        var direction = _currentTrigger == STRAFE_LEFT ? mainCameraRight : mainCameraRight * (-1f);
+
+        Debug.Log("Direction: " + direction);
 
         _stateMachine.transform.position += direction * _speed * Time.deltaTime;
         Debug.DrawLine(_stateMachine.transform.position, _stateMachine.transform.position + direction * _speed);
@@ -38,13 +46,13 @@ public class PlayerStrafeState : PlayerState
 
         if(input.sqrMagnitude == 0f)
         {
-            _stateMachine.ChangeState(nameof(PlayerIdleState), input);
+            _stateMachine.ChangeState(PlayerStateMachine.PLAYER_IDLE_STATE, input);
             return;
         }
 
         if(input.y != 0f)
         {
-            _stateMachine.ChangeState(nameof(PlayerRunState), input);
+            _stateMachine.ChangeState(PlayerStateMachine.PLAYER_RUN_STATE, input);
             return;
         }
 

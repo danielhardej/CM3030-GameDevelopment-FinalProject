@@ -17,11 +17,11 @@ public class PlayerIdleState : PlayerState
 
         if(input.x != 0f && input.y == 0)
         {
-            _stateMachine.ChangeState(nameof(PlayerStrafeState), input);
+            _stateMachine.ChangeState(PlayerStateMachine.PLAYER_STRAFE_STATE, input);
             return;
         }
 
-        _stateMachine.ChangeState(nameof(PlayerRunState), input);
+        _stateMachine.ChangeState(PlayerStateMachine.PLAYER_RUN_STATE, input);
     }
 
     public override void End()
