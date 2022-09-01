@@ -1020,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: bossSpawnPercentage
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
