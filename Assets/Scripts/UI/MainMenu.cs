@@ -13,10 +13,11 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     public GameObject loadingScreen;
+    public GameObject creditScreen;
 
-    public void DisplayCredits()
+    public void ToggleCredits()
     {
-        
+        creditScreen.SetActive(!creditScreen.activeInHierarchy);
     }
 
     public void QuitGame()
