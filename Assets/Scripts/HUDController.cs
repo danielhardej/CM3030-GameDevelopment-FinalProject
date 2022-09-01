@@ -69,7 +69,7 @@ public class HUDController : MonoBehaviour
 
     public void SetScore(int value)
     {
-        Debug.Log("Score set to: " + value);
+        //Debug.Log("Score set to: " + value);
         currentScore = value;
     }
 
