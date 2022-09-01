@@ -13,11 +13,6 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     public GameObject loadingScreen;
-    public Slider slider;
-    public TextMeshProUGUI text;
-
-    //array to hold Quest1, Quest2, Quest3, Quest4
-    public GameObject[] tutorialState;
 
     public void DisplayCredits()
     {
@@ -39,27 +34,10 @@ public class MainMenu : MonoBehaviour
     {
         loadingScreen.SetActive(true);
 
-        float progress = 0;
-        
-        while (progress != 100)
-        {
-            slider.value = progress;
-            text.SetText($"{progress * 100f + "%"}");
-            yield return null;
-        }
-
-        
+        yield return null;
     }
 
-    public void SelectTutorialState()
-    {
-        // loop over the tutorial states and activate each one in turn?
-        // not sure where to call this
-        for (int i = 0; i < tutorialState.Length; i++)
-        tutorialState[i].SetActive(true);
-    }
-
-    private IEnumerator StartingGame()
+    public IEnumerator StartingGame()
     {
         //load scene after the tutorial is completed
         var op = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
