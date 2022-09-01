@@ -126,10 +126,10 @@ public class EnemyFSM : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         health -= damage;
-        GameController.Instance.IncreaseScore(scoreOnDeath);
 
         if (health <= 0)
         {
+            GameController.Instance.IncreaseScore(scoreOnDeath);
             gameObject.SetActive(false);
         }
     }

@@ -34,7 +34,7 @@ public class PlayerStrafeState : PlayerState
         //var direction = _currentTrigger == STRAFE_LEFT ? _stateMachine.PlayerModel.transform.right * (-1f) : _stateMachine.PlayerModel.transform.right;
         var direction = _currentTrigger == STRAFE_LEFT ? mainCameraRight : mainCameraRight * (-1f);
 
-        Debug.Log("Direction: " + direction);
+        //Debug.Log("Direction: " + direction);
 
         _stateMachine.transform.position += direction * _speed * Time.deltaTime;
         Debug.DrawLine(_stateMachine.transform.position, _stateMachine.transform.position + direction * _speed);

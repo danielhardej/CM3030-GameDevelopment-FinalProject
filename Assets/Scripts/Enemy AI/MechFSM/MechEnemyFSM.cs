@@ -159,7 +159,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void MoveToState(MechBaseState state)
     {
-        Debug.Log("Entering state: " + state);
+        //Debug.Log("Entering state: " + state);
         currentState = state;
         currentState.EnterState(this);
     }
@@ -172,10 +172,10 @@ public class MechEnemyFSM : MonoBehaviour
         health -= damage;
 
         //Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
-        GameController.Instance.IncreaseScore(scoreOnDeath);
 
         if (health <= 0)
         {
+            GameController.Instance.IncreaseScore(scoreOnDeath);
             gameObject.SetActive(false);
         }
     }
