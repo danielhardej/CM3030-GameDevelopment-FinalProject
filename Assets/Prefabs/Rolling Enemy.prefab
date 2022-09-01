@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  scoreOnDeath: 500
+  scoreOnDeath: 100
   seekSpeed: 8
   updateTime: 2
   waitTime: 5
