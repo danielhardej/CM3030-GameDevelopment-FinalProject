@@ -178,7 +178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95463407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.42, y: 0, z: -21.63}
+  m_LocalPosition: {x: 3.7, y: 0, z: -13.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1668365390}
@@ -427,7 +427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220738153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.5, y: 0, z: -14.23}
+  m_LocalPosition: {x: -2.7, y: 0, z: -7.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1668365390}
@@ -1002,22 +1002,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619456, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: maxEnemies
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: bosses.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: enemies.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: bossSpawnPercentage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: bosses.Array.data[0]
+      value: 
+      objectReference: {fileID: 5706164959383617648, guid: 46dfa58812f1c1741b4056cfd21a207a,
+        type: 3}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
       objectReference: {fileID: 5706164959383617648, guid: ea86079e9740e114c94da1cb3b15e657,
         type: 3}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 3789970061039388018, guid: 18a82a3c95723b04dba2883c0da85866,
+        type: 3}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: spawnPoints.Array.data[0]
@@ -1048,6 +1080,11 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[5]
       value: 
       objectReference: {fileID: 1717833188}
+    - target: {fileID: 7191989017109619457, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
+        type: 3}
+      propertyPath: spawnPoints.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7191989017109619458, guid: b4c3e0a0cdb9cef4abb528d85699b44c,
         type: 3}
       propertyPath: m_RootOrder
@@ -2860,7 +2897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445875338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.1, y: 0, z: -23.8}
+  m_LocalPosition: {x: 19.8, y: 0, z: -18.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1668365390}
@@ -3732,7 +3769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717833188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.62, y: 0, z: -21.63}
+  m_LocalPosition: {x: 1.6, y: 0, z: 83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1668365390}
@@ -3783,7 +3820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUDController: {fileID: 451843747}
   score: 0
-  scoreModifier: 100
+  scoreModifier: 1
 --- !u!1 &1752637430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3808,7 +3845,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752637430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.12, y: 0, z: -21.63}
+  m_LocalPosition: {x: 9, y: 0, z: 41.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1668365390}

@@ -5,6 +5,7 @@ using TMPro;
 
 public class HUDController : MonoBehaviour
 {
+
     public GameObject pauseMenu;
     public GameObject backgroundMusicObject;
 
@@ -15,16 +16,19 @@ public class HUDController : MonoBehaviour
     private TextMeshProUGUI scoreLabel;
     private TextMeshProUGUI timeLabel;
     private TextMeshProUGUI healthLabel;
-    private int score;
+    private int previousScore;
     private int displayedScore;
+    private int currentScore;
     private float displayHealth;
+    private float startTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         scoreLabel = GetComponentInChildren<TextMeshProUGUI>();
-        score = 0;
+        previousScore = 0;
         displayedScore = 0;
+        currentScore = 0;
 
         displayHealth = 1f;
 
@@ -38,15 +42,25 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(displayedScore < score)
+        // If there has been a change in score, begin moving the bar
+        if (currentScore != previousScore)
         {
-            displayedScore += 1;
+            // Each frame moves a fraction of the curve
+            displayedScore = Mathf.RoundToInt(Mathf.Lerp(previousScore, currentScore, (Time.time - startTime) * 1.5f));
         }
-        else if (displayedScore > score)
+        else
         {
-            displayedScore -= 1;
+            // Keep track of when we begun changing scores
+            startTime = Time.time;
         }
-        
+
+        // If we have fully interpolated to the current score value, reset the check for a change in values
+        if (displayedScore >= currentScore)
+        {
+            displayedScore = currentScore;
+            previousScore = currentScore;
+        }
+
         scoreLabel.SetText($"{displayedScore.ToString("n0")}");
         timeLabel.SetText(GetFormattedTime());
         healthLabel.SetText($"{displayHealth:P0}");
@@ -55,7 +69,8 @@ public class HUDController : MonoBehaviour
 
     public void SetScore(int value)
     {
-        score = value;
+        //Debug.Log("Score set to: " + value);
+        currentScore = value;
     }
 
     public void SetHealth(float value)

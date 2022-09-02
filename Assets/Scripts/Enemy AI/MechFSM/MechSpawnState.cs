@@ -13,7 +13,7 @@ public class MechSpawnState : MechBaseState
     {
         if(!agent.enabled)
         {
-            var isOnGround = Physics.Raycast(FSM.transform.position + Vector3.up, Vector3.down, 1f);
+            var isOnGround = Physics.Raycast(FSM.transform.position + Vector3.up, Vector3.down, heightCheck);
 
             if(isOnGround)
             {

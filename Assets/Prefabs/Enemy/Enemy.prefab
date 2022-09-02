@@ -249,7 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ce49657684999419209f17a24d0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 250
+  scoreOnDeath: 1000
   seekSpeed: 8
   updateTime: 2
   waitTime: 5
@@ -258,7 +259,6 @@ MonoBehaviour:
   player: {fileID: 0}
   NPCgO: {fileID: 0}
   hit_player: 0
-  animator: {fileID: 0}
   isOnGround: 0
 --- !u!95 &-2069169431256764335
 Animator:
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb67348190fff6d47a1c9f5bdb449e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateSpeed: 10
   healthBar: {fileID: 470808772832163898}
 --- !u!1001 &1022270494791186676
 PrefabInstance:

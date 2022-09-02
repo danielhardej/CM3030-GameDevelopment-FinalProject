@@ -79,6 +79,8 @@ public class MechEnemyFSM : MonoBehaviour
     public float range;
     [Tooltip("The distance the mech will attempt to approach to while firing")]
     public float preferredRange;
+    [Tooltip("Score rewarded upon being killed")]
+    public int scoreOnDeath;
 
     [Header("Movement")]
     [Tooltip("The time, in seconds, between target position updates")]
@@ -87,6 +89,8 @@ public class MechEnemyFSM : MonoBehaviour
     public float sightHeightOffset;
     [Tooltip("The mech's target location for it's NavMeshAgent"), ReadOnly]
     public Vector3 destination;
+    [Tooltip("Height value to use for transitioning out of the spawn state")]
+    public float heightCheck = 1;
 
     [HideInInspector]
     public NavMeshAgent agent;
@@ -157,7 +161,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void MoveToState(MechBaseState state)
     {
-        Debug.Log("Entering state: " + state);
+        //Debug.Log("Entering state: " + state);
         currentState = state;
         currentState.EnterState(this);
     }
@@ -169,11 +173,11 @@ public class MechEnemyFSM : MonoBehaviour
     {
         health -= damage;
 
-        Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
-        GameController.Instance.IncreaseScore(10);
+        //Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
 
         if (health <= 0)
         {
+            GameController.Instance.IncreaseScore(scoreOnDeath);
             gameObject.SetActive(false);
         }
     }
@@ -259,7 +263,7 @@ public class MechEnemyFSM : MonoBehaviour
     //Big Canons
     public void ShootBgCanonA()
     {
-        Debug.Log("ShootBigCanonA");
+        //Debug.Log("ShootBigCanonA");
         animator.SetTrigger("ShootBigCanonA");
         FireAtTarget(BigCanon01L.transform.position, reticle, mainGunDamage);
         FireAtTarget(BigCanon01R.transform.position, reticle, mainGunDamage);

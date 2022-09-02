@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     public GameObject HUDController;
 
     public int score = 0;
-    public int scoreModifier = 100;
+    public int scoreModifier = 1;
 
     public void IncreaseScore(int value)
     {
