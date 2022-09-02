@@ -158,5 +158,5 @@ MonoBehaviour:
   damage: 25
   initialVelocity: 3000
   rigidbody: {fileID: 3957456611240435571}
-  explosion: {fileID: 8549868895657338831, guid: 50a0dbd00322c0f4581e6dff671a0d8e,
+  explosion: {fileID: 8549868895657338831, guid: 2904690f3aaa72e43926a092a62db059,
     type: 3}
