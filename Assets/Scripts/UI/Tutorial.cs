@@ -182,7 +182,7 @@ public class Tutorial : MonoBehaviour
 
                         if(Quest5.activeInHierarchy)
                         {
-                            StartCoroutine(mainMenu.StartGame(keyHandler, clickHandler));
+                            StartCoroutine(mainMenu.StartGame());
                             return;
                         }
                     }

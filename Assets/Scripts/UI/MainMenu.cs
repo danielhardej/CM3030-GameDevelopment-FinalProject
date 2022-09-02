@@ -48,7 +48,7 @@ public class MainMenu : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator StartGame(params IDisposable[] listeners)
+    public IEnumerator StartGame()
     {
         //load scene after the tutorial is completed
         var op = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
@@ -56,11 +56,6 @@ public class MainMenu : MonoBehaviour
         while (!op.isDone)
         {
             yield return null;
-        }
-
-        foreach (var item in listeners)
-        {
-            item.Dispose();
         }
     }
 
