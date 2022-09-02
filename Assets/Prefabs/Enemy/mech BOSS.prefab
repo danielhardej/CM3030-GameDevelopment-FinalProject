@@ -1021,6 +1021,7 @@ MonoBehaviour:
   updateTime: 1
   sightHeightOffset: 2
   destination: {x: 0, y: 0, z: 0}
+  heightCheck: 2
   agent: {fileID: 0}
   player: {fileID: 0}
   NPCgO: {fileID: 0}

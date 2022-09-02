@@ -89,6 +89,8 @@ public class MechEnemyFSM : MonoBehaviour
     public float sightHeightOffset;
     [Tooltip("The mech's target location for it's NavMeshAgent"), ReadOnly]
     public Vector3 destination;
+    [Tooltip("Height value to use for transitioning out of the spawn state")]
+    public float heightCheck = 1;
 
     [HideInInspector]
     public NavMeshAgent agent;
@@ -159,7 +161,7 @@ public class MechEnemyFSM : MonoBehaviour
 
     public void MoveToState(MechBaseState state)
     {
-        //Debug.Log("Entering state: " + state);
+        Debug.Log("Entering state: " + state);
         currentState = state;
         currentState.EnterState(this);
     }

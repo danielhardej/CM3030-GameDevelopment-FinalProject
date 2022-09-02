@@ -29,6 +29,8 @@ public class EnemyFSM : MonoBehaviour
     public float health;
     [Tooltip("Score rewarded upon being killed")]
     public int scoreOnDeath;
+    [Tooltip("Damage done when colliding with player")]
+    public float collisionDamage = 10f;
 
     [Header("Movement")]
     [Tooltip("The speed that the agent moves. This is identical to changing the speed in the navmesh agent")]
@@ -102,6 +104,7 @@ public class EnemyFSM : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             //Debug.Log("Player hit!");
+            collision.gameObject.SendMessage("ApplyDamage", collisionDamage, SendMessageOptions.DontRequireReceiver);
             hit_player = true;
         }
 

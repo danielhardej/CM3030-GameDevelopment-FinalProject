@@ -19,7 +19,7 @@ public class SpawnState : BaseState
             yield return null;
         }
 
-        Debug.Log("Moving from spawn state");
+        //Debug.Log("Moving from spawn state");
         //animator.SetBool("IsSleeping", false);
         yield return new WaitForSeconds(1f);
         FSM.MoveToState(FSM.seek);
