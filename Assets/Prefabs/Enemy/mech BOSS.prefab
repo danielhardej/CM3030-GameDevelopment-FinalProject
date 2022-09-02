@@ -998,7 +998,7 @@ MonoBehaviour:
   SmallCanon02R: {fileID: 1563052788}
   LazerSight: {fileID: 2047206941215275344}
   Reticle: {fileID: 869251182910463316}
-  explosion: {fileID: 8549868895657338831, guid: 50a0dbd00322c0f4581e6dff671a0d8e,
+  explosion: {fileID: 8549868895657338831, guid: 2904690f3aaa72e43926a092a62db059,
     type: 3}
   lockRotation: 0
   animator: {fileID: 5706164959374144478}
