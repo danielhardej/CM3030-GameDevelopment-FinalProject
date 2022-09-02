@@ -44,6 +44,9 @@ public class Tutorial : MonoBehaviour
     public GameObject Quest4;
     public TutorialButton escapeButton;
 
+    [Header("Quest 5")]
+    public GameObject Quest5;
+
     [Header("Progress Indicator")]
     public Slider progressSlider;
     public TextMeshProUGUI progressLabel;
@@ -59,6 +62,7 @@ public class Tutorial : MonoBehaviour
         Quest2.SetActive(false);
         Quest3.SetActive(false);
         Quest4.SetActive(false);
+        Quest5.SetActive(false);
 
         keyHandler = InputSystem.onEvent.ForDevice<Keyboard>()
             .Where(e => e.type == new FourCC('S', 'T', 'A', 'T'))
@@ -144,9 +148,8 @@ public class Tutorial : MonoBehaviour
                     {
                         if(_progress > 1f)
                         {
-                            keyHandler.Dispose();
-                            clickHandler.Dispose();
-                            StartCoroutine(mainMenu.StartingGame());
+                            
+                            ActivateAndDeactivateQuests(Quest4, Quest5, 1f);
                             return;
                         }
                         _progress += 0.1f;
@@ -160,7 +163,7 @@ public class Tutorial : MonoBehaviour
             {
                 var button = action.GetFirstButtonPressOrNull();
 
-                clickButton.SetLowlighted();
+                clickButton?.SetLowlighted();
 
                 if (button != null)
                 {
@@ -175,6 +178,12 @@ public class Tutorial : MonoBehaviour
                                 return;
                             }
                             _progress += 0.1f;
+                        }
+
+                        if(Quest5.activeInHierarchy)
+                        {
+                            StartCoroutine(mainMenu.StartGame(keyHandler, clickHandler));
+                            return;
                         }
                     }
                 }
@@ -198,6 +207,13 @@ public class Tutorial : MonoBehaviour
     {
         progressSlider.value = _progress;
         progressLabel.SetText($"{_progress:P0}");
+    }
+
+    void OnDisable()
+    {
+        keyHandler.Dispose();
+        clickHandler.Dispose();
+        Debug.Log("This was called");
     }
 
     private void ActivateAndDeactivateQuests(GameObject firstQuest, GameObject secondQuest, float progress)

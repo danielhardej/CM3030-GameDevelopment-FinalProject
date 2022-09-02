@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 
 public class MainMenu : MonoBehaviour
@@ -33,12 +34,21 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator BeginTutorial()
     {
+        if(PlayerPrefs.HasKey("ShowedTutorial"))
+        {
+            yield return StartGame();
+
+            yield break;
+        }
+
         loadingScreen.SetActive(true);
+
+        PlayerPrefs.SetInt("ShowedTutorial", 1);
 
         yield return null;
     }
 
-    public IEnumerator StartingGame()
+    public IEnumerator StartGame(params IDisposable[] listeners)
     {
         //load scene after the tutorial is completed
         var op = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
@@ -46,6 +56,11 @@ public class MainMenu : MonoBehaviour
         while (!op.isDone)
         {
             yield return null;
+        }
+
+        foreach (var item in listeners)
+        {
+            item.Dispose();
         }
     }
 
