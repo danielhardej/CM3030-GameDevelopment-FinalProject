@@ -144,9 +144,9 @@ public class Tutorial : MonoBehaviour
                     {
                         if(_progress > 1f)
                         {
-                            StartCoroutine(mainMenu.StartingGame());
                             keyHandler.Dispose();
                             clickHandler.Dispose();
+                            StartCoroutine(mainMenu.StartingGame());
                             return;
                         }
                         _progress += 0.1f;
