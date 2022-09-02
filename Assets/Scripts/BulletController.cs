@@ -29,7 +29,7 @@ public class BulletController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Debug.Log("Bullet impact: " + collision.gameObject);
+        //Debug.Log("Bullet impact: " + collision.gameObject);
 
         // New damage application method
         collision.gameObject.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);

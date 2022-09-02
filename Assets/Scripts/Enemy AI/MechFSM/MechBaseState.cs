@@ -42,6 +42,8 @@ public abstract class MechBaseState
     protected float sightHeightOffset;
     protected Vector3 destination;
 
+    protected float heightCheck;
+
     protected MechEnemyFSM FSM;
     #endregion
 
@@ -69,6 +71,8 @@ public abstract class MechBaseState
 
         targetPositionUpdateTime = npc.updateTime;
         sightHeightOffset = npc.sightHeightOffset;
+
+        heightCheck = npc.heightCheck;
 
         destination = npc.destination;
 
