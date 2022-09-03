@@ -36,6 +36,11 @@ public class PlayerStateMachine : MonoBehaviour
     public AudioSource audioSourceRegular;
     public AudioSource audioSourceAlarm;
 
+    private bool isAlarmPlaying;
+    private bool playerHealthBelowThreshhold;
+    private float alarmThreshhold;
+    private bool isPlayerDead;
+
 
     void Start()
     {
@@ -58,6 +63,11 @@ public class PlayerStateMachine : MonoBehaviour
         cardianlForward.y = 0;
         forward = cardianlForward;
         //Debug.Log(forward);
+
+        isAlarmPlaying = false;
+        audioSourceAlarm.clip = audioDanger;
+        alarmThreshhold = originalHealth * 0.4f;
+        isPlayerDead = false;
     }
 
     // Update is called once per frame
@@ -67,19 +77,62 @@ public class PlayerStateMachine : MonoBehaviour
         {
             Start();
         }
-       
+
+        // Check whether the player's health is low
+        playerHealthBelowThreshhold = playerHealth <= alarmThreshhold;
+
+        // If the player is dead, we just want to stop playing this alarm sound. Setting this false should do that. (Bit of a hacky way to do it)
+        if (playerHealth <= 0)
+        {
+            playerHealthBelowThreshhold = false;
+            
+            // If the player has in fact died, we want to play the death sound
+            if (!isPlayerDead)
+            {
+                // Set this flag to true so that it does not play again
+                isPlayerDead = true;
+
+                // Play the death sound
+                audioSourceAlarm.clip = audioDeath;
+                audioSourceAlarm.Play();
+            }
+        }
+        // If the player's health is low AND the alarm isn't playing, play the alarm
+        else if (playerHealthBelowThreshhold && !isAlarmPlaying)
+        {
+            // Set this flag true so we do not repeat any of this code
+            isAlarmPlaying = true;
+            // Begin the looping alarm coroutine
+            StartCoroutine(PlayAlarm());
+        }
+
         _currentState.Update();
+    }
+
+    IEnumerator PlayAlarm()
+    {
+        // Wait 1 second between each beep
+        yield return new WaitForSeconds(1f);
+
+        // Make the alarm noise
+        audioSourceAlarm.Play();
+
+        // Check to make sure the player is still below the threshold health
+        if (!playerHealthBelowThreshhold)
+        {
+            // If not, reset the flag and exit the coroutine
+            isAlarmPlaying = false;
+        }
+        else
+        {
+            // Otherwise, loop back, play the coroutine (And beep) again
+            StartCoroutine(PlayAlarm());
+        }
     }
 
     void FixedUpdate()
     {
         _currentState.FixedUpdate();
-        if(playerHealth <= originalHealth * 0.4)
-        {
-            audioSourceAlarm.clip = audioDanger;
-            audioSourceAlarm.loop = true;
-            audioSourceAlarm.Play();
-        }
     }
 
     public void ChangeState(string stateName, Vector2 input) 
@@ -118,9 +171,6 @@ public class PlayerStateMachine : MonoBehaviour
         if(playerHealth <= 0)
         {
             ChangeState(PLAYER_DEATH_STATE, Vector2.zero);
-            audioSourceAlarm.loop = false;
-            audioSourceAlarm.clip = audioDeath;
-            audioSourceAlarm.Play();
         }
 
         var healthPercentage = playerHealth / originalHealth;
