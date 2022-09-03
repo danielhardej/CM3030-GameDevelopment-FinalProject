@@ -147,7 +147,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void OnMove(InputValue input)
     {
-
         Vector2 inputVec = input.Get<Vector2>();
 
         _currentState.Move(inputVec);
