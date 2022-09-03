@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2003,8 +2003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _img: {fileID: 1236871024}
-  _hover: {fileID: 21300000, guid: 6dff7eeb6e13de84aa2603260f0961e0, type: 3}
-  _default: {fileID: 21300000, guid: 64657b14987765b49ad099be05fba355, type: 3}
+  _hover: {fileID: 21300000, guid: 64657b14987765b49ad099be05fba355, type: 3}
+  _default: {fileID: 21300000, guid: 6dff7eeb6e13de84aa2603260f0961e0, type: 3}
   _hoverClip: {fileID: 8300000, guid: fab5939c9ed416340a25f1a2f4e04f7e, type: 3}
   _pressClip: {fileID: 8300000, guid: fad985f1c15bdd048a098887c8fd3c32, type: 3}
   _source: {fileID: 1236871021}
@@ -2136,7 +2136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -5.6, y: -347.7}
+  m_AnchoredPosition: {x: -7.9, y: -347.7}
   m_SizeDelta: {x: 600, y: 201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &1358956053

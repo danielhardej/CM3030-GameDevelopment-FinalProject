@@ -83,77 +83,89 @@ public class Tutorial : MonoBehaviour
 
                 escapeButton.SetLowlighted();
 
-                if (button != null)
+                if (button == null)
                 {
-                    switch (button.displayName)
-                    {
-                        case "W":
-                        case "Up":
-                            tutorialButtonW.SetHighlighted();
-                            tutorialButtonUp.SetHighlighted();
-                            break;
-                        case "A":
-                        case "Left":
-                            tutorialButtonA.SetHighlighted();
-                            tutorialButtonLeft.SetHighlighted();
-                            break;
-                        case "S":
-                        case "Down":
-                            tutorialButtonS.SetHighlighted();
-                            tutorialButtonDown.SetHighlighted();
-                            break;
-                        case "D":
-                        case "Right":
-                            tutorialButtonD.SetHighlighted();
-                            tutorialButtonRight.SetHighlighted();
-                            break;
-                        case "Space":
-                            spaceButton.SetHighlighted();
-                            break;
-                        case "Esc":
-                            escapeButton.SetHighlighted();
-                            break;
-                    }
+                    return;
+                }
 
-                    if (button.displayName == "Up" || button.displayName == "W" ||
-                        button.displayName == "Down" || button.displayName == "S"||
-                        button.displayName == "Left" || button.displayName == "A" ||
-                        button.displayName == "Right" || button.displayName == "D")
+                Debug.Log(button.displayName);
+
+                switch (button.displayName)
+                {
+                    case "W":
+                    case "Up":
+                        tutorialButtonW.SetHighlighted();
+                        tutorialButtonUp.SetHighlighted();
+                        break;
+                    case "A":
+                    case "Left":
+                        tutorialButtonA.SetHighlighted();
+                        tutorialButtonLeft.SetHighlighted();
+                        break;
+                    case "S":
+                    case "Down":
+                        tutorialButtonS.SetHighlighted();
+                        tutorialButtonDown.SetHighlighted();
+                        break;
+                    case "D":
+                    case "Right":
+                        tutorialButtonD.SetHighlighted();
+                        tutorialButtonRight.SetHighlighted();
+                        break;
+                    case "Space":
+                        spaceButton.SetHighlighted();
+                        break;
+                    case "Escape":
+                    case "Esc":
+                    case "Q":
+                        escapeButton.SetHighlighted();
+                        break;
+                }
+
+                if (button.displayName == "Up" || button.displayName == "W" ||
+                    button.displayName == "Down" || button.displayName == "S"||
+                    button.displayName == "Left" || button.displayName == "A" ||
+                    button.displayName == "Right" || button.displayName == "D")
+                {
+                    
+                    if(Quest1.activeInHierarchy)
                     {
-                        
-                        if(Quest1.activeInHierarchy)
+                        _progress += 0.25f;
+                        if(_progress > 1f)
                         {
-                            _progress += 0.25f;
-                            if(_progress > 1f)
-                            {
-                                ActivateAndDeactivateQuests(Quest1, Quest2, 0f);
-                            }
+                            ActivateAndDeactivateQuests(Quest1, Quest2, 0f);
                         }
                     }
 
-                    if (button.displayName == "Space")
-                    {
-                        if(Quest3.activeInHierarchy)
-                        {
-                            if(_progress > 1f)
-                            {
-                                ActivateAndDeactivateQuests(Quest3, Quest4, 0f);
-                                return;
-                            }
-                            _progress += 0.1f;
-                        }
-                    }
+                    act.handled = true;
+                }
 
-                    if (button.displayName == "Esc")
+                if (button.displayName == "Space")
+                {
+                    if(Quest3.activeInHierarchy)
                     {
                         if(_progress > 1f)
                         {
-                            
-                            ActivateAndDeactivateQuests(Quest4, Quest5, 1f);
+                            ActivateAndDeactivateQuests(Quest3, Quest4, 0f);
                             return;
                         }
                         _progress += 0.1f;
                     }
+
+                    act.handled = true;
+                }
+
+                if (button.displayName == "Esc" || button.displayName == "Escape" || button.displayName == "Q")
+                {
+                    if(_progress > 1f)
+                    {
+                        
+                        ActivateAndDeactivateQuests(Quest4, Quest5, 1f);
+                        return;
+                    }
+                    _progress += 0.1f;
+
+                    act.handled = true;
                 }
             });
 
@@ -213,7 +225,6 @@ public class Tutorial : MonoBehaviour
     {
         keyHandler.Dispose();
         clickHandler.Dispose();
-        Debug.Log("This was called");
     }
 
     private void ActivateAndDeactivateQuests(GameObject firstQuest, GameObject secondQuest, float progress)

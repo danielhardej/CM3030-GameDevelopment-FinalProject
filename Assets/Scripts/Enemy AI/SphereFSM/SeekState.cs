@@ -46,9 +46,11 @@ public class SeekState : BaseState
         }
         else
         {
-            //Debug.Log("Setting target to:" + player.transform.position);
-            agent.destination = player.transform.position;
-            FSM.StartCoroutine(SeekStatusCheck());
+            if(FSM.isOnGround)
+            {
+                agent.destination = player.transform.position;
+                FSM.StartCoroutine(SeekStatusCheck());
+            }
         }
     }
 }
