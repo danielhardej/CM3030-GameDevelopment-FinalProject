@@ -11,8 +11,17 @@ public class FireBullet : MonoBehaviour
 
     public Transform SpawnPoint;
 
+    public AudioClip audioFire;
+    AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void OnFire()
     {
         _bulletInstance = Instantiate(Bullet, SpawnPoint.position, SpawnPoint.rotation);
+        audioSource.clip = audioFire;
+        audioSource.Play();
     }
 }

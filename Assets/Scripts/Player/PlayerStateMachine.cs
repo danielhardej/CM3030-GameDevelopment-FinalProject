@@ -28,6 +28,15 @@ public class PlayerStateMachine : MonoBehaviour
     private List<Material> modelMaterials;
     private float pulseSpeed = 0f;
 
+    [Header("Sounds")]
+    public AudioClip audioDamage;
+    public AudioClip audioDanger;
+    public AudioClip audioDeath;
+
+    public AudioSource audioSourceRegular;
+    public AudioSource audioSourceAlarm;
+
+
     void Start()
     {
         _states = new Dictionary<string, PlayerState>();
@@ -65,6 +74,12 @@ public class PlayerStateMachine : MonoBehaviour
     void FixedUpdate()
     {
         _currentState.FixedUpdate();
+        if(playerHealth <= originalHealth * 0.4)
+        {
+            audioSourceAlarm.clip = audioDanger;
+            audioSourceAlarm.loop = true;
+            audioSourceAlarm.Play();
+        }
     }
 
     public void ChangeState(string stateName, Vector2 input) 
@@ -91,6 +106,9 @@ public class PlayerStateMachine : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         UpdateHealth(-damage);
+        audioSourceRegular.clip = audioDamage;
+        audioSourceRegular.Play();
+
     }
 
     private void UpdateHealth(float amount)
@@ -100,6 +118,9 @@ public class PlayerStateMachine : MonoBehaviour
         if(playerHealth <= 0)
         {
             ChangeState(PLAYER_DEATH_STATE, Vector2.zero);
+            audioSourceAlarm.loop = false;
+            audioSourceAlarm.clip = audioDeath;
+            audioSourceAlarm.Play();
         }
 
         var healthPercentage = playerHealth / originalHealth;
