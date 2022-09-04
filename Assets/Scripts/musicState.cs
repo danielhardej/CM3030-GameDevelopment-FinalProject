@@ -44,7 +44,7 @@ public class musicState : MonoBehaviour
             // Set this flag true so the code only fires once
             gameOver = true;
             // Change to our GameOver music
-            audioSource.volume = 1.0f;
+            audioSource.volume = 0.5f;
             audioSource.clip = GameOver;
             // Play the song
             audioSource.Play();

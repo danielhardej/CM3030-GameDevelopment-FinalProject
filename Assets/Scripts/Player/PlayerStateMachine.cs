@@ -102,7 +102,7 @@ public class PlayerStateMachine : MonoBehaviour
             }
         }
         // If the player's health is low AND the alarm isn't playing, play the alarm
-        else if (playerHealthBelowThreshhold && !isAlarmPlaying)
+        else if (playerHealthBelowThreshhold && !isAlarmPlaying && playerHealth > 0)
         {
             // Set this flag true so we do not repeat any of this code
             isAlarmPlaying = true;
