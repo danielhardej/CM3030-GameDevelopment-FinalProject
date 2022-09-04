@@ -39,7 +39,8 @@ public class PlayerStateMachine : MonoBehaviour
     private bool isAlarmPlaying;
     private bool playerHealthBelowThreshhold;
     private float alarmThreshhold;
-    private bool isPlayerDead;
+    [HideInInspector]
+    public bool isPlayerDead;
 
 
     void Start()
