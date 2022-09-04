@@ -23,6 +23,8 @@ public class MainMenu : MonoBehaviour
     public void OnLoadLevel()
     {
         // called by the Start button
+        // clear PlayerPrefs if user starts over from the main menu
+        PlayerPrefs.DeleteAll();
         StartCoroutine(BeginTutorial());
     }
 
@@ -45,6 +47,8 @@ public class MainMenu : MonoBehaviour
     public IEnumerator StartGame()
     {
         //load scene after the tutorial is completed
+        initialiser.SetActive(true);
+        yield return new WaitForSeconds(5);
         var op = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
 
         while (!op.isDone)
@@ -52,5 +56,4 @@ public class MainMenu : MonoBehaviour
             yield return null;
         }
     }
-
 }
