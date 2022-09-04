@@ -9,7 +9,7 @@ public class DeathSphereDebugger : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("Entered");
+        //Debug.Log("Entered");
         if (collider.gameObject.CompareTag("Player"))
         {
             collider.gameObject.SendMessage("ApplyDamage", damageOnEnter, SendMessageOptions.DontRequireReceiver);
