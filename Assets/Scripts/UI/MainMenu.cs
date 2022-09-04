@@ -14,6 +14,7 @@ using System;
 public class MainMenu : MonoBehaviour
 {
     public GameObject loadingScreen;
+    public GameObject initialiser;
 
     public void QuitGame()
     {
