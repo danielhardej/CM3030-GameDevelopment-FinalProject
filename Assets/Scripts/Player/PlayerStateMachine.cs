@@ -102,7 +102,7 @@ public class PlayerStateMachine : MonoBehaviour
             }
         }
         // If the player's health is low AND the alarm isn't playing, play the alarm
-        else if (playerHealthBelowThreshhold && !isAlarmPlaying && playerHealth > 0)
+        else if (playerHealthBelowThreshhold && !isAlarmPlaying)
         {
             // Set this flag true so we do not repeat any of this code
             isAlarmPlaying = true;
@@ -123,7 +123,7 @@ public class PlayerStateMachine : MonoBehaviour
         audioSourceAlarm.Play();
 
         // Check to make sure the player is still below the threshold health
-        if (!playerHealthBelowThreshhold)
+        if (!playerHealthBelowThreshhold && playerHealth > 0)
         {
             // If not, reset the flag and exit the coroutine
             isAlarmPlaying = false;
@@ -163,9 +163,11 @@ public class PlayerStateMachine : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         UpdateHealth(-damage);
-        audioSourceRegular.clip = audioDamage;
-        audioSourceRegular.Play();
-
+        if (playerHealth > 0)
+        {
+            audioSourceRegular.clip = audioDamage;
+            audioSourceRegular.Play();
+        }
     }
 
     private void UpdateHealth(float amount)

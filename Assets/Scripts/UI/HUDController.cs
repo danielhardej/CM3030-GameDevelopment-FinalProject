@@ -16,8 +16,8 @@ public class HUDController : MonoBehaviour
     private TextMeshProUGUI scoreLabel;
     private TextMeshProUGUI timeLabel;
     private TextMeshProUGUI healthLabel;
-    private TextMeshProUGUI endTimeLabel;
-    private TextMeshProUGUI highScoreLabel;
+    //private TextMeshProUGUI endTimeLabel;
+    //private TextMeshProUGUI highScoreLabel;
     private int previousScore;
     private int displayedScore;
     private int currentScore;
@@ -64,9 +64,9 @@ public class HUDController : MonoBehaviour
         }
 
         scoreLabel.SetText($"{displayedScore.ToString("n0")}");
-        highScoreLabel.SetText($"{displayedScore.ToString("n0")}");
+        //highScoreLabel.SetText($"{displayedScore.ToString("n0")}");
         timeLabel.SetText(GetFormattedTime());
-        endTimeLabel.SetText(GetFormattedTime());
+        //endTimeLabel.SetText(GetFormattedTime());
         healthLabel.SetText($"{displayHealth:P0}");
 
     }
