@@ -69,6 +69,8 @@ public class MechEnemyFSM : MonoBehaviour
     [Header("Sounds")]
     public AudioClip audioBigCanon;
     public AudioClip audioSmallCanon;
+    public AudioClip enemyDeath;
+
     [HideInInspector]
     AudioSource audioSource;
 
@@ -104,6 +106,7 @@ public class MechEnemyFSM : MonoBehaviour
     [HideInInspector]
     public Transform body;
 
+    private bool isDead;
     #endregion
 
     // Start is called before the first frame update
@@ -127,6 +130,8 @@ public class MechEnemyFSM : MonoBehaviour
         AimingPoint = player.transform.Find("AimPoint").gameObject;
         reticle = AimingPoint.transform.position;
         Reticle.enabled = false;
+
+        isDead = false;
 
         MoveToState(spawnState);
     }
@@ -175,11 +180,29 @@ public class MechEnemyFSM : MonoBehaviour
 
         //Debug.Log("Hit! Took: " + damage + " damage. " + health + " health remaining");
 
-        if (health <= 0)
+        // If the health is below 0, die
+        if (health <= 0 && !isDead)
         {
+            // Set the isDead tag true so this only gets called once
+            isDead = true;
+            // Increase the score
             GameController.Instance.IncreaseScore(scoreOnDeath);
-            gameObject.SetActive(false);
+            // Begin dying
+            StartCoroutine(MechDie());
         }
+    }
+
+    IEnumerator MechDie()
+    {
+        // Play the death sound
+        audioSource.clip = enemyDeath;
+        audioSource.Play();
+
+        // Wait 2 seconds
+        yield return new WaitForSeconds(2f);
+
+        // Remove enemy
+        gameObject.SetActive(false);
     }
 
     /// <summary>

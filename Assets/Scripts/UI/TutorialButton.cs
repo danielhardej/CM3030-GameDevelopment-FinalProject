@@ -19,6 +19,7 @@ public class TutorialButton : Image
 
         defaultSprite = this.sprite;
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.3f;
     }
 
     public void SetHighlighted()
