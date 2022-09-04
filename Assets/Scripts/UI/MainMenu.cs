@@ -14,13 +14,6 @@ using System;
 public class MainMenu : MonoBehaviour
 {
     public GameObject loadingScreen;
-    public GameObject creditScreen;
-    public GameObject initialiser;
-
-    public void ToggleCredits()
-    {
-        creditScreen.SetActive(!creditScreen.activeInHierarchy);
-    }
 
     public void QuitGame()
     {
