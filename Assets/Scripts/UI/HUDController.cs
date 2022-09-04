@@ -76,7 +76,12 @@ public class HUDController : MonoBehaviour
     public void SetHealth(float value)
     {
         displayHealth = value;
+        if(value < 0)
+        {
+            value = 0;
+        }
     }
+
 
     public void OnPauseGame()
     {

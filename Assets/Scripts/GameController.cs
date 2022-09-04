@@ -6,12 +6,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GameController : MonoBehaviour
 {
 
     public static GameController Instance { get; private set; }
 
     public GameObject HUDController;
+    [SerializeField]
+    public GameObject GameOverMenu;
 
     public int score = 0;
     public int scoreModifier = 1;
@@ -32,9 +36,9 @@ public class GameController : MonoBehaviour
             HUDController?.SendMessage("SetHealth", value);
         }
 
-        if(value < 0)
+        if(value == 0)
         {
-            //TODO: ENDGAME
+            GameOverMenu.gameObject.SetActive(true);
         }
     }
 
