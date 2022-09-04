@@ -17,6 +17,9 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     #region Variables
+    [SerializeField]
+    GameObject player;
+
     [Header("Spawn settings")]
     [SerializeField, Tooltip("Time, in seconds, between each spawning")]
     float spawnDelay;
@@ -26,6 +29,8 @@ public class EnemySpawnManager : MonoBehaviour
     int bossSpawnPercentage;
     [SerializeField, Tooltip("How should enemies be spawned?")]
     SpawnType spawnType;
+    [SerializeField, Tooltip("The maximum distance to the player which will still result in spawning")]
+    float activationDistance = 10;
 
     [Header("Spawners")]
     [SerializeField, Tooltip("Spawner game objects to be managed")]
@@ -50,6 +55,16 @@ public class EnemySpawnManager : MonoBehaviour
     {
         Random,
         Distributed
+    }
+
+    // Draws a sphere in order to make spawn activation radius visible
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Color c = Color.yellow;
+        c.a = 0.4f;
+        Gizmos.color = c;
+        Gizmos.DrawSphere(transform.position, activationDistance);
     }
 
     // Start is called before the first frame update
@@ -109,26 +124,31 @@ public class EnemySpawnManager : MonoBehaviour
         }
         else
         {
-            if (spawnType == SpawnType.Random)
+            bool isPlayerWithinRange = Vector3.Distance(player.transform.position, transform.position) < activationDistance;
+
+            if (isPlayerWithinRange)
             {
-                // Pick a random spawn point from our list of spawners
-                int randomIndex = Random.Range(0, spawnPoints.Count);
+                if (spawnType == SpawnType.Random)
+                {
+                    // Pick a random spawn point from our list of spawners
+                    int randomIndex = Random.Range(0, spawnPoints.Count);
 
-                // Spawn enemy
-                SpawnEntity(RandomEnemy(), spawnPoints[randomIndex].transform.position, spawnPoints[randomIndex].transform.rotation);
-            }
-            else if (spawnType == SpawnType.Distributed)
-            {
-                // Spawn enemy at the current spawner in sequence
-                SpawnEntity(RandomEnemy(), spawnPoints[spawnerSequence].transform.position, spawnPoints[spawnerSequence].transform.rotation);
+                    // Spawn enemy
+                    SpawnEntity(RandomEnemy(), spawnPoints[randomIndex].transform.position, spawnPoints[randomIndex].transform.rotation);
+                }
+                else if (spawnType == SpawnType.Distributed)
+                {
+                    // Spawn enemy at the current spawner in sequence
+                    SpawnEntity(RandomEnemy(), spawnPoints[spawnerSequence].transform.position, spawnPoints[spawnerSequence].transform.rotation);
 
-                // Increment to the next spawner
-                spawnerSequence++;
+                    // Increment to the next spawner
+                    spawnerSequence++;
 
-                // Ensure we don't overflow the number of spawners.
-                // Modding the step we are on by our maximum number of spawners will
-                // Always wrap around to the correct range of values
-                spawnerSequence %= spawnPoints.Count;
+                    // Ensure we don't overflow the number of spawners.
+                    // Modding the step we are on by our maximum number of spawners will
+                    // Always wrap around to the correct range of values
+                    spawnerSequence %= spawnPoints.Count;
+                }
             }
         }
 
