@@ -69,6 +69,8 @@ public class MechEnemyFSM : MonoBehaviour
     [Header("Sounds")]
     public AudioClip audioBigCanon;
     public AudioClip audioSmallCanon;
+    public AudioClip enemyDeath;
+
     [HideInInspector]
     AudioSource audioSource;
 
@@ -91,9 +93,6 @@ public class MechEnemyFSM : MonoBehaviour
     public Vector3 destination;
     [Tooltip("Height value to use for transitioning out of the spawn state")]
     public float heightCheck = 1;
-
-    [Header("Sounds")]
-    public AudioClip enemyDeath;
 
     [HideInInspector]
     public NavMeshAgent agent;

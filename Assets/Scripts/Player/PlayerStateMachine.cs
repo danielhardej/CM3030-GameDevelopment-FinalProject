@@ -21,6 +21,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float playerHealth;
     public float originalHealth;
 
+    public GameObject playerDangerThumbnail;
+
     // Changes needed in order to facilitate player control changes
     //public Vector3 forward => PlayerModel.transform.forward;
     public Vector3 forward;// => Camera.main.transform.forward;
@@ -67,7 +69,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         isAlarmPlaying = false;
         audioSourceAlarm.clip = audioDanger;
-        alarmThreshhold = originalHealth * 0.4f;
+        alarmThreshhold = originalHealth * 0.2f;
         isPlayerDead = false;
     }
 
@@ -96,6 +98,7 @@ public class PlayerStateMachine : MonoBehaviour
                 // Play the death sound
                 audioSourceAlarm.clip = audioDeath;
                 audioSourceAlarm.Play();
+                playerDangerThumbnail.SetActive(false);
             }
         }
         // If the player's health is low AND the alarm isn't playing, play the alarm
@@ -112,6 +115,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     IEnumerator PlayAlarm()
     {
+        playerDangerThumbnail.SetActive(true);
         // Wait 1 second between each beep
         yield return new WaitForSeconds(1f);
 

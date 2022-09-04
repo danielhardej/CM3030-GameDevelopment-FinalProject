@@ -44,6 +44,7 @@ public class musicState : MonoBehaviour
             // Set this flag true so the code only fires once
             gameOver = true;
             // Change to our GameOver music
+            audioSource.volume = 1.0f;
             audioSource.clip = GameOver;
             // Play the song
             audioSource.Play();
@@ -52,6 +53,7 @@ public class musicState : MonoBehaviour
 
     IEnumerator PlayMusic()
     {
+        audioSource.volume = 0.24f;
         // Get the next clip to play
         AudioClip clip = inGameMusic[songRotation];
 
