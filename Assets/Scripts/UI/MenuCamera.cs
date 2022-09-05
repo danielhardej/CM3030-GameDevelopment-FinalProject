@@ -26,6 +26,6 @@ public class MenuCamera : MonoBehaviour
     {
         transform.Rotate(0, speed * Time.deltaTime, 0);
 
-        transform.position = target.position + new Vector3(150,heightFromTarget,0) - transform.forward * distanceFromTarget;
+        transform.position = target.position + new Vector3(distanceFromTarget ,heightFromTarget,0) - transform.forward * distanceFromTarget;
     }
 }
